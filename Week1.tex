@@ -132,8 +132,15 @@ This is an example of a \defi{constructive proof}.  That means that in order to 
 \item Convert $160$ to base-$7$.
 
 We start with long division to find the first remainder, which will be $d_0$.
+\[\longdiv{160}{7}\]
 
-\longdiv{160}{7}
+At this point, we know $160 = 22\cdot 7 + 6$.
+
+Since $22 \not = 0$, we repeat the process.
+\[\longdiv{22}{7}\]
+
+Now we have $22 = 3 \cdot 7 + 1$.  Finally, $3 \div 7$ gives us a quotient of $0$, so we can stop this process.  Back-substitution yields
+\[160 = (3\cdot 7 + 1)\cdot 7 + 6 = 3\cdot 7^2 + 1 \cdot 7 + 6 = (316)_7.\]
 
 \item Verify that $(11001001)_2 = 201$.
 
@@ -159,15 +166,30 @@ N&O&P&Q&R&S&T&U&V&W&X&Y&Z\\
 \end{table}
 
 Now we can convert text to integers! \[
-(MATH)_26 = 12\cdot 26^3 + 0 \cdot 26^2 + 19\cdot26 + 7 = 211,413 \]
+(MATH)_{26} = 12\cdot 26^3 + 0 \cdot 26^2 + 19\cdot26 + 7 = 211,413 \]
 
 \item We can also work with decimal/rational numbers in other bases, but we don't necessarily have unique representations in this case.
 
-\[(MA.TH)_26 = 12^\cdot 26 + 0 + 19 \cdot 26^{-1} + 7 \cdot 26^{-2} = 312 + \frac{510}{676}\]
+\[(MA.TH)_{26} = 12^\cdot 26 + 0 + 19 \cdot 26^{-1} + 7 \cdot 26^{-2} = 312 + \frac{510}{676}\]
 
 You can prove the following equality with geometric series.
-\[(.ZZZ\overline{Z})_26 = (B)_26\]
+\[(.ZZZ\overline{Z})_{26} = (B)_{26}\]
 
 \end{enumerate}
 \end{example}
+
+\section{Homework}
+
+\begin{enumerate}
+\item Read pages 1 - 44 in \cite{Singh}.  Take note of the definitions of italicized words.  We'll discuss them on the first day of class.
+
+\item (Foiling Cryptanalysis) Study pp.\ 32-44 of Simon Singh's book.  Draft a short summary (1 paragraph) of Babington's plot without using ``e'' (-1 point for any occasion that this glyph shows up in your writing). As usual, grammar counts! You may consult a dictionary or similar book to assist your writing.  Follow our format for class writing.  Good luck!
+\item Perform the following calculations.
+\begin{enumerate}
+\item Multiply $(212)_3$ by $(122)_3$.
+\item Divide $(40122)_7$ by $(126)_7$.
+\item Multiply the binary numbers $101101$ and $11001$, and divide $10011001$ by $1011$.
+\item 3 points. In base 26 with digits $A - Z$ representing $0 - 25$, multiply $YES$ by $NO$, and divide $JQVXHJ$ by $WE$.
+\end{enumerate}
+\end{enumerate}
 
