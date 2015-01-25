@@ -1,0 +1,173 @@
+\begin{chapquote}{Prof. Gibbons, Class}
+``If you don't like fun, you should probably drop this class.''
+\end{chapquote}
+
+We begin with a discussion of the fundamentals of \gls{cryptography}.  The first example we saw was a \gls{scytale}, which is a type of \gls{transposition}.  We also noted that the encrypted syllabus was encrypted using a \gls{substitution} cipher (specifically, a 13-\gls{Caesar shift}).  In fact, the syllabus also included a little bit of \gls{steganography}; the link to the actual syllabus was hidden using white text on white background.
+
+\section{Important vocabulary}
+ 
+Please see the glossary for a list of the important vocabulary from the reading.
+
+\section{Conventions}
+To distinguish between enciphered and deciphered text, we use the following conventions.  Plain text is written in lower case: \plain{This is an example of plain text.}  
+Enciphered text is written in upper case.  Enciphering the example sentence using a 13-Caesar shift, we see that our enciphered message reads:
+\EdefRot{13}\ex{THIS IS AN EXAMPLE OF PLAIN TEXT}
+{\tt \ex}.
+
+
+\section{What Makes a Good Code}
+After class discussion, we decided that a good encryption system should satisfy some basic criteria:
+\begin{itemize}
+\item Hard to crack
+\item Reasonably easy to decrypt
+    \begin{itemize}
+    \item Key and algorithm for en- or decryption available to the person en- or decrypting (securely transmitted)
+    \item Some system where the person decrypting doesn't need a key securely transmitted
+    \end{itemize}
+\item Key is easy to look up if you know what to do, but hard to guess (lots of possibilities)
+\item Potentially use layers of encryption for extra security
+\item Takes a reasonable amount of time and/or physical resources (like a code book) to en- or decrypt a message (relative to the scenario in which the message is being en- or decrypted)
+\end{itemize}
+
+We note that a system that requires sending someone a key securely puts us in an infinite loop of encrypting a message, then encrypting its key, then encrypting the key's key, \textit{ad nauseum}.  It would be nice to find a way around this.  One option would be for both parties to meet up and exchange relevant info (or hire/build a third party to do so).  However, this may put us at risk of violating the last principle of our ``good encryption'' list!
+
+For example, if Amazon.com has to securely transmit a key to each customer (who must then encrypt and send their payment info to Amazon.com), they have to expend a huge amount of time and money to set up the meetings between Amazon.com representatives and customers.  
+
+Another example of a ``bad encryption'' system is one wherein an agent in the field has to lug around a 10lb phone book to encrypt her messages.  She's going to have a hard time moving quickly or being inconspicuous. 
+
+We began thinking about the flaws in encryption systems that work as in Figure~\ref{fig:flawed}.
+
+\begin{figure}[!h]\label{fig:flawed}
+\centering
+\[
+\xymatrix{ 
+             & & & \text{Odette} \ar[dd]_{intercept} \ar[ddrr]^{intercept} & & \\
+\text{Alice} & & &     &          & \text{Bob} \\
+{\substack{\text{``Let's see\quad } \\ \text{other people'' \quad}}} \ar[rr]_{encrypt}       &      & \ar[r]_{encrypt\,key} & \ar[rr]_{encrypt\, key's\, key}  &               & {\substack{\text{\quad ``Let's see } \\ \text{\quad other people''} \\ \text{\qquad + plaintext key}}}
+}
+\]
+\caption{Alice sends a message to Bob.  But Bob needs the key to decrypt the message.  To securely send the key to decrypt the message, she encrypts that, too.  Etc.}
+\end{figure}
+
+\section{Cracking codes}
+
+To decrypt the course syllabus, Jeff used frequency analysis to try to crack the cipher text.  For future reference, below is a frequency analysis table (Table~\ref{tab:freqanalysis}) for the English language (as presented in \cite{Singh}).  We'll defer further frequency analysis until a bit later in the course.
+
+\begin{table}[!h]\label{tab:freqanalysis}
+\centering
+\caption{Frequency tables for the English language.}
+\begin{footnotesize}
+\begin{tabular}{| c | c | c | c || c | c |}
+\hline
+Letter & Frequency & Letter & Frequency & Group & Range\\
+\hline
+a & 8.2\%   & n & 6.7\% & e                 & $>$12\% \\
+b & 1.5\%   & o& 7.5\%  & t,a,o,i,n,s,h,r   & 6---9\%\\
+c & 2.8\%   & p & 1.9\% & d,l               & 4\% \\
+d & 4.3\%   & q & 0.1\% & c,u,m,w,f,g,y,p,b & 1.5---3\% \\
+e & 12.7\%  & r & 6.0\% & v,k,j,x,q,z       & $<$1\% \\
+f & 2.2\%   & s &6.3\%  &&\\
+g & 2.0\%   & t &9.1\%  &&\\
+h & 6.1\%   & u &2.8\%  &&\\
+i & 7.0\%   & v &1.0\%  &&\\
+j & 0.2\%   & w &2.4\%  &&\\
+k & 0.8\%   & x &0.2\%  &&\\
+l & 4.0\%   & y & 2.0\% &&\\
+m & 2.4\%   & z & 0.1\% &&\\
+\hline
+\end{tabular}
+
+In the ``Group'' column, the entries are ordered left to right in decreasing frequency.  E.g., \plain{t} appears with relative frequency 9.1\%, \plain{a} appears with relative frequency 8.2\%, and so on.
+\end{footnotesize}
+\label{tab:freq-table}
+\end{table}
+
+\section{Numbers and Operations in other bases}
+
+Most of us already have an idea of what the expression \[
+(110101)_2\]
+represents.  Indeed, we interpret it as follows:\[
+(110101)_2 = 1\cdot 2^5 + 1\cdot 2^4 + 0\cdot2^3 +1 \cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0 = 57.
+\]
+
+\begin{definition} Let $n \in \ZZ$, $b \in \ZZ_{> 1}$.  Then there exist unique integers $d_0, d_1, \ldots, d_{k-1} \in \{0, 1, 2, \ldots, b-1\}$ such that \[
+n = d_{k-1} b^{k-1} + d_{k-2}b^{k-2} + \cdots + d_{2} b^2 + d_1 b + d_0.\]
+
+The integers $d_0, \ldots, d_{k-1}$ are called \defi{digits}, and if $d_{k-1} \not = 0$, $n$ is called a \defi{$k$-digit base-$b$ number}, denoted
+\[ n = \left(d_{k-1} d_{k-2} \cdots d_1 d_0\right)_b.\]
+When $b = 10$, we drop this notation.  When $b = 2$ is clear from context, we also drop this notation.
+\end{definition}
+
+\begin{proposition}\label{prop:!digits} The digits are indeed unique.\end{proposition}
+
+In order to prove this proposition, we need to invoke the following result about integers.
+
+\begin{theorem}[The Division Algorithm] Let $n \in \ZZ$ and $b \in \ZZ_{> 1}$.  Then there are unique integers $m$ and $d$ such that $0 \leq d \leq b-1$ and \[n = m q + d.\]
+\end{theorem}
+
+The key observation is that the division algorithm ensures that $d$ is a base-$b$ digit.  Although $m$ may not be a base-$b$ digit, we can apply the division algorithm to $m$ to find the next base-$b$ digit, $d_1$, in the representation of $n$.
+
+\begin{proof}[Proof of \ref{prop:!digits}] Let $n \in \ZZ$, $b \in \ZZ_{> 1}$.  By the division algorithm, there exist $n_0 \in \ZZ$ and $d_{0} \in \ZZ$ where $0 \leq d_0 \leq b-1$ and \begin{equation}\label{eq:!digits1}
+n = n_0 b + d_0.
+\end{equation}
+
+Similarly, there exists $n_1$ and $d_1$ such that \begin{equation}
+n_0 = n_1 b + d_1.
+\end{equation}
+
+Repeating this process for each nonzero $n_i$, we eventually find that there is a positive integer $k$ for which \begin{equation}
+n_k = 0 \cdot b + d_{k-1}.
+\end{equation}
+
+Then substituting these equalities into Equation~\eqref{eq:!digits1}, we obtain \[
+n = d_{k-1} b^{k-1} + \cdots + d_2 b^2 + d_1 b + d_0.
+\]
+By the uniqueness of each $n_i$ in the division algorithm, it follows that this representation of $n$ as a base-$b$ number is unique.
+\end{proof}
+
+This is an example of a \defi{constructive proof}.  That means that in order to find the base-$b$ representation of an integer $n$ for given $b$ and $n$, we can follow the steps in the proof.
+
+\begin{example} Working with different bases.
+\begin{enumerate}[(1)]
+\item Convert $160$ to base-$7$.
+
+We start with long division to find the first remainder, which will be $d_0$.
+
+\longdiv{160}{7}
+
+\item Verify that $(11001001)_2 = 201$.
+
+\item When working in base-$26$, we use the letters $A$ through $Z$ as the digits:
+
+\begin{table}[!h]\label{tab:base26digits}
+\centering
+\begin{small}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+ A & B & C & D & E & F & G & H & I& J & K & L &M  \\
+ \hline
+0 & 1& 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\hline
+\hline
+N&O&P&Q&R&S&T&U&V&W&X&Y&Z\\
+\hline
+13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25\\
+\hline
+\end{tabular}
+\caption{The alphabet as the digits for $base$-26.}
+\end{small}
+\end{table}
+
+Now we can convert text to integers! \[
+(MATH)_26 = 12\cdot 26^3 + 0 \cdot 26^2 + 19\cdot26 + 7 = 211,413 \]
+
+\item We can also work with decimal/rational numbers in other bases, but we don't necessarily have unique representations in this case.
+
+\[(MA.TH)_26 = 12^\cdot 26 + 0 + 19 \cdot 26^{-1} + 7 \cdot 26^{-2} = 312 + \frac{510}{676}\]
+
+You can prove the following equality with geometric series.
+\[(.ZZZ\overline{Z})_26 = (B)_26\]
+
+\end{enumerate}
+\end{example}
+

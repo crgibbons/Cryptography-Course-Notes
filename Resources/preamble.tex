@@ -1,0 +1,137 @@
+\documentclass[letter,11pt]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[acronym,toc,nonumberlist]{glossaries}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{rotchiffre}
+\usepackage{xypic}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{enumerate}
+
+%%%%%%%%%%%
+% Math Macros
+%%%%%%%%%%%%
+\newcommand{\ZZ}{\mathbb{Z}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Distinguished styles for text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\plain}[1]{{\tt\lowercase{#1}{}}}
+\newcommand{\cipher}[1]{{\tt\uppercase{#1}{}}}
+\newcommand{\defi}[1]{\textbf{\textit{#1}}{}}
+\renewcommand*{\glstextformat}{\defi}
+
+%%%%%%%%%%%
+% Standard Math Environments
+%%%%%%%%%%%%%%%%%%
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 'dedication' environment: To add a dedication paragraph at the start of book %
+% Source: http://www.tug.org/pipermail/texhax/2010-June/015184.html            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{dedication}
+{
+   \cleardoublepage
+   \thispagestyle{empty}
+   \vspace*{\stretch{1}}
+   \hfill\begin{minipage}[t]{0.66\textwidth}
+   \raggedright
+}
+{
+   \end{minipage}
+   \vspace*{\stretch{3}}
+   \clearpage
+}
+
+%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter quote at the start of chapter        %
+% Source: http://tex.stackexchange.com/a/53380 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+%%%%%%%%%%
+% Load up the Glossary entries
+%%%%%%%%%%
+\makeglossaries
+\input{Resources/glossary.tex}
+
+
+%%%%%%%%%
+% Long Division
+%%%%%%%%%
+
+%  longdiv.tex  v.1  (1994)  Donald Arseneau  
+%
+%  Work out and print integer long division problems.  Use:
+%       \longdiv{numerator}{denominator}
+%  The numerator and denominator (divisor and dividend) must be integers, and
+%  the quotient is an integer too.  \longdiv leaves a remainder.
+%  Use this in any type of TeX.
+
+\newcount\gpten % (global) power-of-ten -- tells which digit we are doing
+\countdef\rtot2 % running total -- remainder so far
+\countdef\LDscratch4 % scratch
+
+\def\longdiv#1#2{%
+ \vtop{\normalbaselines \offinterlineskip
+   \setbox\strutbox\hbox{\vrule height 2.1ex depth .5ex width0ex}%
+   \def\showdig{$\underline{\the\LDscratch\strut}$\cr\the\rtot\strut\cr
+       \noalign{\kern-.2ex}}%
+   \global\rtot=#1\relax
+   \count0=\rtot\divide\count0by#2\edef\quotient{\the\count0}%\show\quotient
+   % make list macro out of digits in quotient:
+   \def\temp##1{\ifx##1\temp\else \noexpand\dodig ##1\expandafter\temp\fi}%
+   \edef\routine{\expandafter\temp\quotient\temp}%
+   % process list to give power-of-ten:
+   \def\dodig##1{\global\multiply\gpten by10 }\global\gpten=1 \routine
+   % to display effect of one digit in quotient (zero ignored):
+   \def\dodig##1{\global\divide\gpten by10
+      \LDscratch =\gpten
+      \multiply\LDscratch  by##1%
+      \multiply\LDscratch  by#2%
+      \global\advance\rtot-\LDscratch \relax
+      \ifnum\LDscratch>0 \showdig \fi % must hide \cr in a macro to skip it
+   }%
+   \tabskip=0pt
+   \halign{\hfil##\cr % \halign for entire division problem
+     $\quotient$\strut\cr
+     #2$\,\overline{\vphantom{\big)}%
+     \hbox{\smash{\raise3.5\fontdimen8\textfont3\hbox{$\big)$}}}%
+     \mkern2mu \the\rtot}$\cr\noalign{\kern-.2ex}
+     \routine \cr % do each digit in quotient
+}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First page of book which contains 'stuff' like: %
+%  - Book title, subtitle                         %
+%  - Book author name                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Book's title and subtitle
+\title{\Huge \textbf{Cryptography}  \\ \huge Course Notes, Spring 2015 % Author
+\author{\textsc{Courtney Gibbons (\& class)}}}
+
