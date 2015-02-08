@@ -1,31 +1,280 @@
-\begin{chapquote}{Someone said this}
-``This was said.''
+\begin{chapquote}{Prof. Gibbons, Quiz}
+``LOOKBEHINDYOU.''
 \end{chapquote}
 
-\section{Here's the first section}
+
+%%AKA the chapter where one wants to declare war on LaTeX, even though it is way better at writing math things than Word.
+
+
+\section{Encryption via Division Algorithm}
+This is how we will encrypt using the Division Algorithm.
+
+\begin{enumerate}
+\item Break the message into strings of length $s$. The integer $s$ will be the key.
+\item If necessary, pad the last string with $X$s so it's of length $s$.
+\item For each length $s$ string
+\begin{enumerate}
+\item Consider it as a base-26 number.
+\item Convert to base-10.
+\item Put 0's at the front as necessary.
+\end{enumerate}
+\item Concatenate all the base-10 numbers in order.
+\end{enumerate}
+
+\begin{example} Bob wants to send Alice this message:
+
+{\centering LETS GO SKYDIVING.\\}
+
+They have a predetermined encryption system. Their key is $s=3$.\\
+First, break the message into strings of three.\\
+{\centering LET SGO SKY DIV ING\\}
+In this case, there are enough letters in the message so we do not need to add nulls to the end.\\
+To encode the first string "LET", find the corresponding number from the base-26 cipher alphabet.
+
+{\centering $(L E T)_{26} = (11 4 19)$\\}
+
+Use the Division Algorithm to figure out the what the cipher should be.
+
+{\centering $ (L E T)_{26} = 11 \times 26^{2} + 4 \times 26^{1} + 19 \times 26^{0} = 7559$\\}
+
+Since the max amount of digits this string can create is 5, we'll add a 0 to the beginning. So the final cipher for (LET) is 07559.\\
+
+When the rest of the message is encoded, it should be:\
+
+{\centering 07559 12338 12452 02257 05752\\}
+
+So Bob would send 0755912338124520225705752 to Alice.
+
+\end{example}
+
+\section{Decryption via Division Algorithm}
+This is how we will decrypt using the Division Algorithm.
+
+\begin{enumerate}
+\item Break into strings of size $t$ where $t$ is the max number of base-10 digits from a length $s$ string in base-26.
+\item Convert each length $t$ string to base-26.
+\item Concatenate.
+\end{enumerate}
+
+
+\begin{example}
+
+Bob receives from Alice: 
+
+{\centering 0572809400\\}
+The key is still $s=3$. Therefore, $t=5$ (as the max number of digits from $s=3$).
+Bob can split the code as: 05728 09400.
+
+Using the Division Algorithm, we can decode the first string.
+\begin{equation} \label{eq1}
+\begin{split}
+05728 = 5728 & = 220 \times 6 + 8\\
+ & = (8 \times 26 + 12) \times 26 + 8\\
+  & = 8 \times 26^{2} + 12 \times 26^{1} + 8\\
+  & = (I M I)_{26}
+\end{split}
+\end{equation}
+
+The full message, when decoded, is "IMINXO" or "I'm in XO."
+
+
+\end{example}
+
+\section{More About Keys for the Division Algorithm}
 
 \begin{theorem}
-Here's a theorem.
+For all integers n, $b^{k-1} \leq n \le b^{k}$ if and only if $n$ is a $k$-digit base-$b$ number.
 \end{theorem}
+\begin{corollary}\label{cor:ExampleCor} Let $k$ be the number of digits of $n$ in base-$b$. Then $k = [\frac{\ln {n}}{\ln {b}}] + 1$ \end{corollary}
 
-\begin{proof}
-Here's its proof.
+Here's the proof for the corollary.
+\begin{proof} Because
+\[
+b^{k-1} \leq n \le b^{k},\]
+it follows that
+\[
+\log_{b}(b^{k-1}) \leq \log_{b}(n) < \log_{b}(b^{k}).
+\]
+Thus,
+\[
+  k-1 \leq log_{b}(n) \le k.
+\]
+It follows that $k-1 = log_{b}(n)$.  Then, adding one to each side and using the laws of logarithms, we obtain
+\[k = (\frac{\ln(n)}{\ln(b)}) + 1\]
+as desired.
 \end{proof}
 
-\begin{definition} This is the definition of the word \defi{definition}.  If the word is in the Glossary, you can use \gls{algorithm} to make it a clickable link!
+
+\begin{example}
+Let $b = 8$ and $k =3$.
+From the definition, $n$ is a 3-digit base-8 number if and only if $n = d_{2} * 8^{2} + d_1 * 8 + d_{0}$ where $d_{2} \neq 0$.
+Smallest: $d_{1} = d_{0} = 0$ and $d_{2} = 1 \Rightarrow 8^{1}$
+Largest: $d_{2} = d_{1} = d_{0} = 7$
+\end{example}
+
+\begin{example}
+Let $b = 403$ and $n = 1590000000002$. How many digits would be needed to represent $n$ in base-$b$?\\
+
+Using the corollary, we know that,\\
+\begin{align*}
+k &= \left[\frac{\ln {n}}{\ln {b}}\right] + 1\\
+&= \left[\frac{\ln{1590000000002}}{\ln{403}}\right] + 1\\
+&= 5.
+\end{align*}
+
+
+
+
+So $n$ would have a 5 digit representation in base-$b$.\\
+\end{example}
+
+The major flaw of the using the Division Algorithm for encryption and decryption is that it requires that both parties know the same key. We'll get back to this fact later.
+
+
+\section{Number Theory: Properties of Integers (especially primes)}
+%%Wenlu's Section: Wednesday January 28, 2015
+
+We started class with the following warm up problem:
+
+\begin{center}
+\begin{tabular}{r l l l}
+         & $(4$ & $3$  & $1)_{7}$\\
+$\times$ &      & $(1$ & $1)_{7}$\\
+\hline
+    $(1$ & $4$  & $3$  & $1)_{7}$\\
+ $+\,(4$ & $3$  & $1$  & $0)_{7}$\\
+ \hline
+    $(5$ & $0$  & $4$ & $1)_{7}$
+\end{tabular}
+\end{center}
+
+\begin{proposition} In general, in base-$b$, $b=(10)_b$. \end{proposition}
+
+\begin{proposition} For all $b \in \ZZ$, $b^n - 1$ is divisible by $b-1$, and in fact, 
+$$b^n -1 = (b-1)(b^n-1 + b^n-2 + ... + b + 1).$$
+\end{proposition}
+
+\begin{proof} We'll work in base-$b$.
+
+\underline{Claim \#1.} $b^n-1 = (b-1 | b-1 | b-1 |...| b-1 |)_b$ (there are $n$ digits of $b-1$).\\
+
+Although it's not needed for the proof, notice that in base-$26$, 
+\[26^2 -1 = (Z\,\,\,Z)_{26}, 26^2=(B\,\,\,A\,\,\,A)_{26} \quad \text{ and } (B\,\,\,A\,\,\,A)_{26} - (B)_{26} = (Z\,\,\,Z)_{26}.\]
+
+Furthermore, by the definition of a base-$b$ representation,
+\[b^{n-1} + b^{n-2} + ... + b + 1 = (1\,\,1...1\,\,1)_b.\]
+
+Like the warm-up problem, we end up with the simple multiplication problem
+
+\begin{center}
+\begin{tabular}{r c c c c}
+$(1$ & $1$ & \ldots & $1$ & $1)_{b}$\\
+$\times$ & & & & $(b-1)_{b}$\\
+\hline
+$(b-1$ & $b-1$ & $\ldots$ & $b-1$ & $b-1)_{b}$
+\end{tabular}
+\end{center}
+
+As we've noted already, 
+\[ (b-1 \,\,\, b-1 \,\,\, \ldots \,\,\, b-1 \,\,\, b-1)_b = b^n -1.\]
+
+\end{proof}
+
+\begin{corollary}\label{cor:factorCor} For any integer $b$, \[b^{mn} - 1 = (b^{m}-1)(b^{m(n-1)} + b^{m(n-2)} +...+b^m + 1).\]
+\end{corollary}
+
+\begin{proof}
+Use base-$b^m$ and factoring!\\
+\end{proof}
+
+\begin{example} We can use this type of result to factor or take quotients.  Indeed, given $(2^{35} - 1 ) \div (2^5 -1)$, we have $35 = 5 \times 7$ so let $m=5, n=7, b=2$.
+
+By Corollary~\ref{cor:factorCor},
+\begin{align*}
+(2^{35}-1) &= (2^{5}-1)(2^{5(7-1)}+2^{5(7-2)}+...+2^5+1)\\
+ &= (2^{5})(2^{30}+2^{25}+2^{20}+2^{15}+2^{10}+2^5+1).
+\end{align*}
+
+Thus $(2^{35} - 1 ) \div (2^5 -1) = (2^{30}+2^{25}+2^{20}+2^{15}+2^{10}+2^5+1)$.
+\end{example}
+
+\begin{definition}  Let $n\in\ZZ$.  Then, 
+\begin{itemize}
+\item $n$ is \defi{even} if there exists $m\in\ZZ$ such that $n=2m$,
+\item $n$ is \defi{odd} if there exists $q\in \ZZ$ such that $n=2q+1$,
+\item $n$ is \defi{divisible} by 4 if there exists $s\in\ZZ$ such that $n=4s$,
+\item $m$ is a \defi{factor} of $n$ if there exists $k \in \ZZ$ such that $mk=n$, and
+\item $n$ is \defi{divisible} by $m$ if and only if there exists $k \in \ZZ$ such that $n=mk$.
+\end{itemize}
 \end{definition}
 
-\begin{proposition} Here's a prop.\end{proposition}
+\begin{proposition} An integer $n$ is divisible by $m$ if any only if $m$ is a factor of $n$.
+\end{proposition}
 
-\begin{example} Here's an example. \end{example}
+\begin{proof}  Suppose $n$ is divisible by $m$.  This is the case if and only if there exists $k \in \ZZ$ such that $n = mk$.  This is true if and only if $m$ is a factor of $n$.\end{proof}
 
-\begin{corollary}\label{cor:ExampleCor} And a corollary.  This one is labeled so you can refer to it later.\end{corollary}
+%%%Friday January 30th, 2015
+\section{Greatest Common Divisors}
 
-You can refer to Corollary~\ref{cor:ExampleCor} like this.
 
-\section{Here's the second section}
-You can look at Week 1 for tips.  One useful one is long division:
+\begin{definition} The \defi{greatest common divisor} (GCD) of
+    $a, b \in \mathbb{Z}$
+    is the largest positive integer $d$ where 
+    $d \mid a$ and  $d \mid b.$ \\
+    \indent\indent\indent(Note that $d \mid a$ is read "d divides a.")  It is denoted
+    \[\gcd(a, b) = d.\]
+\end{definition}
 
+In simple cases with relatively small values of $a$ and $b$, mathematicians use Factor Trees to find the greatest common divisor of two integers. Producing Factor Trees for both $a$ and $b$ will result in the prime factorization of each number. The factors they have in common are then multiplied to obtain their GCD.
+
+
+\begin{example} Find $gcd(6, 8)$.
+\center The prime factorizations of 6 and 8 are \\
+$6 = 2 \times 3$ and \\
+$8 = 2 \times 2 \times 2.$ 
+\\The common factor is a single 2 so we have $gcd(6, 8) = 2$.
+\end{example}
+
+
+The downfall of using Factor Trees to calculate GCD is that they are inefficient for increasing values of $a$ and $b$. Instead, we can use a quicker, more mechanical method of GCD calculation.
+
+
+\begin{theorem}
+(Euclidean Algorithm for GCD). 
+Let $a, b \in \mathbb{Z}$. 
+Set $r_{-1} = a$ and $r_{0} = b$. 
+Given $r_{i-2}, r_{i-1}$, use the Division Algorithm to find $r_{i}$ such that 
+\[r_{i-2} = r_{i-1}q_{i} + r_{i}\,\,for\,\,0 \leq r_{i} \leq r_{i-1} - 1.\]
+
+Then:
+\begin{enumerate}
+    \item  There exists $t \geq 0$ such that $r_{t} \neq 0  $and$  r_{t+1} = 0.$
+    \item  With $t$ as above, $gcd(a, b) = r_{t}.$
+\end{enumerate}
+\end{theorem}
+
+\begin{example} In order to find $gcd(831332,27484)$, we'll use the Eucliden Algorithm.  This works via a series of long divisions.
+
+First divide the larger number by the smaller number.
 \[
-\longdiv{05728}{26}
+\longdiv{831332}{27484}
 \]
+
+ Then divide the original smaller number by the remainder.
+\[
+\longdiv{27484}{6812}
+\]
+
+ Continuing this process, you will eventually get to...
+\[
+\longdiv{12}{8}
+\]
+ 
+ And finally,
+\[
+\longdiv{8}{4}
+\]
+ 
+When you get a remainder of 0, stop. The GCD is the last number you divided by (in this case 4.) 
+Thus, $gcd(831332,27484)= 4$.
+\end{example}

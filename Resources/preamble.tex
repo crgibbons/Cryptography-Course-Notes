@@ -10,6 +10,7 @@
 \usepackage{xypic}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{enumerate}
+\usepackage{tikz}
 
 %%%%%%%%%%%
 % Math Macros
@@ -28,13 +29,13 @@
 % Standard Math Environments
 %%%%%%%%%%%%%%%%%%
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{example}{Example}[section]
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{example}{Example}[chapter]
 
 \theoremstyle{theorem}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}{Proposition}[section]
-\newtheorem{corollary}{Corollary}[section]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 'dedication' environment: To add a dedication paragraph at the start of book %
@@ -42,7 +43,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{dedication}
 {
-   \cleardoublepage
    \thispagestyle{empty}
    \vspace*{\stretch{1}}
    \hfill\begin{minipage}[t]{0.66\textwidth}
