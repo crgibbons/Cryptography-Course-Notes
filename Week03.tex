@@ -63,9 +63,9 @@ The steps to unscramble the message are:
 \item Lots of possible keys for encryptions
 \item Lots of alphabets (Polyalphabetic): Many to many function
 \item Fools Frequency Analysis
-\item Requires counting (You can try to avoid repeated strings
+\item Requires counting (You can try to avoid repeated strings)
 \item (In the 1800's) Lack of technology at the time
-\item (In the 1800's) Length of message could be the keyword.  The upperbound would then be 26\^(length of the message)
+\item (In the 1800's) Length of message could be the keyword.  The upperbound would then be $26^\text{(length of the message)}$
 \end{itemize}
 
 \underline{Cons of Vigen\`ere Cipher:}
@@ -85,7 +85,6 @@ Goal: Find the number of k-element subests of an n-element set.
 \begin{example} My friends and I have 55 cats. We want to enter 3 into the "Loveliest Cat" competition. How many distinct ways can I do it? \\
 
 $$Solution: \frac{55 \times 54 \times 53}{3!} = \frac{55!}{(55-3)!3!} = \binom{55}{3} = _{55}\mathrm{C}_{3}$$\\
-
 
 Note: Just $55 \times 54 \times 53 = 157,410$ is NOT RIGHT! This method implies an order to the selection of cats and overcounts by $6 = 3!$ ways.\\ \\
 In general, "n choose k" can be written as: $$ \binom{n}{k} = \frac{n!}{(n-k)!k!}$$
@@ -144,8 +143,9 @@ Recall from previous math classes that some examples of 'square' numbers are: $1
 \begin{theorem}[Fermat's Last Theorem] For $n \geq 3$, $$x^n + y^n = z^n$$ has no nontrivial integer solutions.
 \end{theorem}
 
-Fermat's Last Theorm was not proven until 1994 by Andrew Wiles using the Theory of Elliptic curves. In this class, we will not show the proof but we will show examples. Fermat's Last Theorem will help us understand diaphantine equations.
-\\
+Fermat's Last Theorem was not proven until 1994 by Andrew Wiles using the theory of elliptic curves. In this class, we will not show the proof but we will show examples. Fermat's Last Theorem will help us understand diophantine equations.
+
+
 \begin{definition}
 A \defi{linear diophantine equation} has the form 
 \[
@@ -171,30 +171,30 @@ c
 = c.$$
 Similar to matrix equations, we could have a system of linear diophantine equations whose integer solution would be a set of assignments $$x_1 = s_1, \, x_2 = s_2, \, ... \, x_n = s_n \in \ZZ.$$
 
-\begin{theorem}
-Let $a, b, c, \in \ZZ$. Consider the equation $ax + by = n$. The following are true:
+\begin{theorem}\label{thm:diophantine}
+Let $a, b, n, \in \ZZ$. Consider the equation $ax + by = n$. The following are true:
 \begin{enumerate}
 \item The equation has an integer solution if and only if $d = gcd(a,b)$ divides $n$.
 \item If $(x_0,y_0)$ is a particular integer solution, then every solution takes the form \[x = x_0 + un \quad \text{and} \quad y = y_0 - vn\] for any $n \in \ZZ$, where $du = b$ and $dv = a$. 
 \end{enumerate}
 \end{theorem}
 Before proving this theorem, let's derive number 2. Consider the example $3x + 5y = 1$. Using the Euclidean Algorithm, we can determine the greatest common denominator of 3 and 5:
-\begin{align*}
-5 &= 3 \cdot 1 + 2 \\
-3 &= 2 \cdot 1 + 1 \\
-2 &= 1 \cdot 2 + 0 
-\end{align*}
-Using these equations, we can apply the Extended Euclidean Algorithm to find $x$ and $y$. As we go through this process, we remember to keep 3s and 5s sacred by not combining them with any other numbers. We start by rewriting equation 3.2 in terms of 2 and the equation 3.3 in terms of 1: 
-\begin{align*}
-2 &= 5 - 3 \cdot 1 \\
-1 &= 3 - 2 \cdot 1. 
-\end{align*}
-Next, we can substitute for 2 in equation 3.6 using equation 3.5:
-\begin{align*}
+\begin{align}
+5 &= 3 \cdot 1 + 2 \label{eq:EEA1}\\
+3 &= 2 \cdot 1 + 1 \label{eq:EEA2}\\
+2 &= 1 \cdot 2 + 0 \notag
+\end{align}
+Using these equations, we can apply the Extended Euclidean Algorithm to find $x$ and $y$. As we go through this process, we remember to keep 3s and 5s sacred by not combining them with any other numbers. We start by rewriting Equation~\eqref{eq:EEA1} in terms of 2 and the Equation~\eqref{eq:EEA2} in terms of 1: 
+\begin{align}
+2 &= 5 - 3 \cdot 1 \label{eq:EEA4}\\
+1 &= 3 - 2 \cdot 1. \label{eq:EEA5} 
+\end{align}
+Next, we can substitute for 2 in Equation~\eqref{eq:EEA5} using Equation~\eqref{eq:EEA4}:
+\begin{align}
 1 &= 3 - (5 - 3 \cdot 1) \cdot 1. \\
   &= 3 - 5 + 3 \\ 
   &= 2 \cdot 3 - 5
-\end{align*}
-Therefore, $x=2$ and $y=-1$. Our extended euclidean algorithm involves back-substituting the equations found using the euclidean algorithm until we work out way up to the first equation.
+\end{align}
+Therefore, $x=2$ and $y=-1$. Our Extended Euclidean Algorithm involves back-substituting the equations found using the Euclidean Algorithm until we work out way up to the first equation.
 
-We can also find other solutions for $x$ and $y$ such as $x = -3$ and $y = 2$. By examining these solutions for $x$ and $y$, we can conclude that they are related in the following way: $x = 2 + bn$ and $y = -1 - an$. From this result, we can derive number 2 in Theorem 3.4.0.6.
+We can also find other solutions for $x$ and $y$ such as $x = -3$ and $y = 2$. By examining these solutions for $x$ and $y$, we can conclude that they are related in the following way: $x = 2 + 5n$ and $y = -1 - 3n$. From this result, we can derive number 2 in Theorem~\ref{thm:diophantine}

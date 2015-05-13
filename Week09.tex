@@ -1,0 +1,117 @@
+\begin{chapquote}{Someone said this}
+``This was said.''
+\end{chapquote}
+
+\section{Overview of the Course thus Far: Symmetric Key Cryptosystems}
+Symmetric refers to the fact that the same key is used to encrypt and decrypt. \\
+
+\underline{Examples:} Enigma (same day key, same message key), one-time pad cipher (key is the page number), Vigenere cipher (keyword), Railfence cipher, scytale (key is the diameter of the rod), "conundrum cipher" (key is the block size) \\ 
+\underline{Flaw:} Not necessarily in the encryption/decryption but instead implementation. \\
+
+For example, if someone intercepts your key, he/she can en/decrypt messages. \\
+
+These are all examples of \textbf{private key cryptography} (which means not publicizing the key).\\
+
+\subsection{Other types of cryptosystems:}
+
+\underline{Asymmetric Key Cryptosystems}: One key to encrypt a message, and a different key to decrypt a message.
+
+\underline{Public Key Cryptosystems}: Publicize one of the keys in an asymmetric key cryptosystem \\
+
+\section{Diffie-Hellman Key Exchange} 
+Utilizes symmetric and private key \\
+
+\underline{Goal:} Securely create a shared, private key over a public channel \\
+
+Let's consider Alice and Bob are trying to communicate again: \\ 
+Alice and Bob agree on two primes, $q<p$ (public decision) \\ 
+Alice chooses a secret integer, a (private) \\ 
+Bob chooses a secret integer, b (private) \\ 
+Alice sends to Bob: $q^{a} \mod p$ (public) \\ 
+Bob sends: $q^{b} \mod p$ \\ 
+Alice calculates: $s=(q^{b} \mod p)^{a}=q^{ab} \mod p$ (private) \\ 
+Bob calculates: $s=(q^{a} modp)^{b}$ = $q^{ab} \mod p$ (private) \\
+Then $s$ is their shared secret key \\
+\begin{example} Alice and Bob choose $p=37, q=7$ \\Alice secret integer: $a=21 \longrightarrow 7^{21} mod37 = 9 \longrightarrow$ Gets sent to Bob \\ Bob secret integer: $b=5 \longrightarrow 7^{5} mod 37 = 10 \longrightarrow$ Gets sent to Alice \\ Alice: 
+$s = 10^{21}mod37 = 26$ (shared secret key) \\ Bob: $s = 9^{5}mod37 = 26$ (shared secret key) \\ So their shared secret key is \textbf{26} \\ Use 26 as the key in a symmetric private key cryptosystem \end{example} 
+
+\underline{Security}: With large primes, it is computationally impossible to determine $a$ and $b$ (that is, $s$ really is private) \\
+
+\underline{Flaw}: lack of authentication (vulnerable to "man in the middle attack") \\
+
+\begin{example} 
+Alice ($a=21$) $\rightarrow$ 10 $\longrightarrow$ Odette ($c=4$) intercepts 10 before it reaches Bob $\longrightarrow$ Odette sends 33 back to Alice \\ Odette also sends 33 to Bob ($b=5$) \\ Odette calculates $7^{4}mod37 = 33$ and sends to Alice and Bob \\ $\longrightarrow$ Alice calculates: $s_1 = 33^{21}mod37 = 10$ \\ $\longrightarrow$ Bob calculates: $s_2 = 33^5mod37 = 12$ \\ \par \underline{Summary:} \\Alice sends a message to Bob (goes through Odette), she uses $s_1$ (shared secret key with Odette) \\Odette decrypts using $s_1$: ``you're great'' \\Odette then changes the message to: ``you're horrible'' \\Odette encrypts with $s_2$, sends to Bob, who decrypts with $s_2$ \end{example} 
+      
+
+
+
+
+
+
+
+
+\section{The Navajo}
+Our esteemed professor started our lecture with an encoded Snippet
+"Klizzie Ne Ahs-Jsh Than-Zie Mausi Lin Wol-la-chee". It was probably an April fool's day Joke. 
+
+We then went on the analyze the Navajo Code talkers used by the Americans in the second world war. The Navajo code talkers helped to turn the tide of the war in the pacific, though they had their pros and cons as a crypto system.
+
+\begin{tabular}{l || r}
+PROs & CONs \\
+No Machine Needed & Vulnerable to Frequency Analysis \\
+Fast communication & Lack of native speakers to recruit \\
+Unique Language Structure & Certain modern words were not in vocabulary \\
+Semi-immune to Frequency analysis & Racist Americans caused problems \\
+ & No Authentication
+\end{tabular}
+
+After a brief wardrobe change the "new" professor Gibbons the topic shifted to ancient Greece.
+
+\section{The Minoans and the Mycenaeans}
+ Most material on this section was contained on a PowerPoint presentation that is available.
+ 
+ The discussion focused on the history and decipherment of Linear B. Known as linear B the language was part of a pair discovered in the region to use very linear markings. Linear A, the other, is still unknown to us. There were various attempts to decipher the language, but the tablets preserved on Crete give the best clues to the eventual strategy. Based on the number of characters Linear B was a syllabic language. This meant that there were syllabic pairings of vowels and consonants represented by different symbols. These were eventually pieced together revealing Linear B to be written ancient Greek. Once deciphered the tablets discussed the History of the Minoans, and their eventual downfall. The Mycenaeans, conquerors of the Crete and the Minoans then adopted their script. 
+ 
+ \section{Public Key Cryptography}
+ Public Key Cryptography is the kind that is used by many modern day websites for gathering personal information. Suppose Professor Gibbons wanted to communicate private info to Amazon. Then Amazon has publicly published a Public Key(n, e) consisting of two related numbers. Then they compute a function f(n, e), such that f inverse cannot feasibly be computed from n and e. 
+ 
+ \subsection{How it Works}
+ \begin{enumerate}
+ \item Alice will publish her key pair $(n, e)$.
+ \item She picks 2 primes $p, q$ (industry uses primes with roughly 150 digits).
+ \item $ n = p * q$ and $ \phi (n) = (p-1)*(q-1) $.
+ \item Choose numbers $e$ at random until $gcd(e, \phi (n)) = 1$.
+ \item Alice computes her Private Key $d$ by solving the Diophantine
+ equation: $ e*d + k* \phi (n) = 1$ for the least positive integer d.
+ \item Alice securely disposes of her calculations and $\phi (n)$.
+ \end{enumerate}
+ 
+ Now suppose Bob wants to send her a message $m$.
+ 
+ \begin{enumerate}
+ \item Using public data Bob computes encrypted message $ S = m^e \% n$
+ \item Alice then decrypts using her private key using $S^d \% n $:
+ \end{enumerate}
+
+ \begin{align}
+  &= m^{e*d} \% n \\
+  &= m^{ \phi (n) (-k) + 1} \% n \\
+  &= m^{ \phi (n)^{-k}} * m \% n \\
+  &= (1)^{-k} m \% n  \quad \text{by Euler's Theorem} \\
+  &= m \quad \text{for} 0 \leq m \leq n -1
+ \end{align}
+
+ 
+ 
+ \begin{example}
+ Suppose Bob wants to send the message $ (NOWAY)_{26}$, and suppose $ (NOWAY)_{26} > n$ where $n$ is Alice's public key. Then $(NOWAY)_{26} \neq  (NOWAY)_{26} \% n$.
+ 
+ The largest 5 digit number base 26 number, $ 26^5 -1$, is greater than n. The largest 4 digit number base 26 number, $ 26^4 -1$, is still too big. The next appropriate number is $ 26^3 -1$. So Bob can use 3 digit base-26 numbers.
+ 
+ So the messages to encode are $m_1 = NOW$ and $ m_2 = AYZ$. These both encode to $ S_1 = (PRI)_{26}$ and $ S_2 = (BZTB)_{26}$.
+ 
+ This is a problem because Alice doesn't know where the spacing should be should the message be $(PRI)_{26} (BZTB)_{26}$ or $(PRIB)_{26} (ZTB)_{26}$. 
+ 
+ 
+ 
+ \end{example}

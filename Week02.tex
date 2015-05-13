@@ -68,7 +68,7 @@ Bob can split the code as: 05728 09400.
 Using the Division Algorithm, we can decode the first string.
 \begin{equation} \label{eq1}
 \begin{split}
-05728 = 5728 & = 220 \times 6 + 8\\
+05728 = 5728 & = 220 \times 26 + 8\\
  & = (8 \times 26 + 12) \times 26 + 8\\
   & = 8 \times 26^{2} + 12 \times 26^{1} + 8\\
   & = (I M I)_{26}
@@ -192,7 +192,7 @@ Use base-$b^m$ and factoring!\\
 By Corollary~\ref{cor:factorCor},
 \begin{align*}
 (2^{35}-1) &= (2^{5}-1)(2^{5(7-1)}+2^{5(7-2)}+...+2^5+1)\\
- &= (2^{5})(2^{30}+2^{25}+2^{20}+2^{15}+2^{10}+2^5+1).
+ &= (2^{5}-1)(2^{30}+2^{25}+2^{20}+2^{15}+2^{10}+2^5+1).
 \end{align*}
 
 Thus $(2^{35} - 1 ) \div (2^5 -1) = (2^{30}+2^{25}+2^{20}+2^{15}+2^{10}+2^5+1)$.
@@ -220,8 +220,7 @@ Thus $(2^{35} - 1 ) \div (2^5 -1) = (2^{30}+2^{25}+2^{20}+2^{15}+2^{10}+2^5+1)$.
 \begin{definition} The \defi{greatest common divisor} (GCD) of
     $a, b \in \mathbb{Z}$
     is the largest positive integer $d$ where 
-    $d \mid a$ and  $d \mid b.$ \\
-    \indent\indent\indent(Note that $d \mid a$ is read "d divides a.")  It is denoted
+    $d \mid a$ and  $d \mid b.$\footnote{Note that $d \mid a$ is read ``d divides a''.}  It is denoted
     \[\gcd(a, b) = d.\]
 \end{definition}
 
@@ -248,7 +247,7 @@ Given $r_{i-2}, r_{i-1}$, use the Division Algorithm to find $r_{i}$ such that
 
 Then:
 \begin{enumerate}
-    \item  There exists $t \geq 0$ such that $r_{t} \neq 0  $and$  r_{t+1} = 0.$
+    \item  There exists $t \geq 0$ such that $r_{t} \neq 0  $ and $  r_{t+1} = 0.$
     \item  With $t$ as above, $gcd(a, b) = r_{t}.$
 \end{enumerate}
 \end{theorem}

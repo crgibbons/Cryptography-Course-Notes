@@ -1,0 +1,254 @@
+\begin{chapquote}{Famous Last Words}
+``This was said.''
+\end{chapquote}
+
+\section{Euler's Totient Function $\phi$}
+A counting function, we input $n \in \ZZ$ and we get a "count of some stuff related to $n$."  Here's the more specific and technical definition.  
+
+\begin{definition}[Euler's Totient Function] Let $n \in \ZZ$.  We define \defi{Euler's totient function} to be $\phi(n)$ as the number of nonnegative integers $m$ < $n$ where $gcd(m,n) = 1$.\footnote{Recall, $m$ and $n$ are said to be relatively prime, if $gcd(m,n) = 1$.}
+\end{definition}
+
+\underline{Examples}
+\begin{enumerate}
+\item $\phi(2) = ?$\\$m = 0,1$\\$gcd(0,2) = 2$ so eliminate 0,\\$gcd(1,2) = 1$ so keep 1,\\$\phi(2) = 1$.
+\item $\phi(4) = ?$\\$m = 0,1,2,3$\\$gcd(0,4) = 4$ so eliminate 0,\\$gcd(1,4) = 1$ so keep 1,\\$gcd(2,4) = 2$ so eliminate 2,\\$gcd(3,4) = 1$ so keep 3,\\$\phi(4) = 2$.
+\item Do yourself:\\$\phi(15) = ?$\\$m = 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14$\\$\phi(15) = 8$
+\end{enumerate}
+In each example, we figured out which numbers less than $n$ in $\phi(n)$ were relatively prime to n.  The total amount of these numbers is $\phi(n)$. 
+
+
+\vspace{5mm}
+The following two theorems (4.1 and 4.2) provide two quick methods to figure out the $\phi(n)$ of some n:
+
+\begin{theorem}
+If $p$ is prime, then $\phi(p) = p - 1$.
+\end{theorem}
+
+\begin{proof}
+Assume p is prime.  Then its positive divisors are 1 and p.  So every number $k \in \left\{ 1, 2, ..., p-1 \right\}$ has $\gcd(k,p) = 1$.
+\end{proof}
+
+\begin{theorem}
+If $p$ is prime, and $a \in N$, then $\phi(p^a) = p^a - p^{a-1}$.
+\end{theorem}
+
+\begin{proof}
+Arrange the numbers 0 through $p^a - 1$:
+\[
+\begin{bmatrix}
+    0 & 1 & 2 & \dots  & p-1 \\
+    p & p+1 & p+2 & \dots  & 2p-1 \\
+    2p & 2p+1 & 2p+2 & \dots & 3p-1 \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    \dots & \dots & \dots & \dots & p^a-1
+\end{bmatrix}
+\]
+Notice that the elements of the left most column are multiples of p. \\So every $p^{th}$ number is a factor of $p^a$ and the sum of these numbers can be expressed as $p^a/p$.  \\Thus the nonnegative integers less than p have $p^a - p^a/p$ elements that are relatively prime to $p^a$. \\And $p^a = p^{a-1}$, so $\phi(p^a) = p^a - p^{a-1}$.
+\end{proof}
+\vspace{5mm}
+The next two theorems can only be used if you can break n into two or more of its prime factors.  Theorem 4.4 is especially useful for figuring out the Euler Function of very large numbers.  
+\begin{theorem}
+$\forall n \in Z \ni n = ab$ where $\gcd(a,b) =1$, then $\phi(n)=\phi(a)\phi(b)$.
+\end{theorem}
+
+\begin{theorem}
+If $n=p_1^{k_1}p_2^{k_2}\cdots p_s^{k_s}$ then
+\begin{align*}
+\phi(n)&=(p_1^{k_1}-p_1^{k_1-1})(p_2^{k_2}-p_2^{k_2-1})\cdots(p_s^{k_s}-p_s^{k_s-1})\\
+&=\prod_{j=1}^n (p_j^{k_j}-p_j^{k_j-1})
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+This proof will be by induction.\\
+Let $P(n) = \prod_{j=1}^n p_j^{k_j}-p_j^{k_j-1}$.\\
+When $n = 1$,  $\phi(p_1^{k_1} )= p_1^{k_1}-p_1^{k_1-1} =\prod_{j=1}^1 p_j^{k_j}-p_j^{k_j-1}$
+ by a previous theorem.
+For the inductive hypothesis assume that $\phi(p_1^{k_1}p_2^{k_2}\dots p_n^{k_n}) = P(n)$ for all $n$ up to some positive integer $t$.
+
+Then consider $p_1^{k_1}p_2^{k_2}\cdots p_{t+1}^{k_{t+1}}$\\
+    Since all of the above numbers are distinct primes, 
+\[\gcd\left(p_1^{k_1}p_2^{k_2}\cdots p_t^{k_t}, p_{t+1}^{k_{t+1}}\right) = 1,\]
+and therefore $\phi (p_1^{k_1}p_2^{k_2}\cdots p_{n+1}^{k_{n+1}}) = \phi (p_1^{k_1}p_2^{k_2}\cdots p_{t}^{k_{t}}) \phi(p_{t+1}^{k_{t+1}})$.
+Hence $\phi(p_1^{k_1}p_2^{k_2}\cdots p_n^{k_n}) = P(n)$ for all integers n.
+\end{proof}
+
+\section{Hill Cipher}
+Consider a substitution cipher that instead of shifting the alphabet, obtained its cipher through matrix multiplication. This is entirely possible if we consider a letter as a number from 0 to 25.
+
+\begin{example}
+Let $A = 
+\begin{bmatrix}
+    1 & 2  \\
+    3 & 4 
+\end{bmatrix}$\\
+Suppose we wanted to encrypt the message {\tt good day} to transmit to Bob. We will first pad the message to create an even number of characters, so that we're now sending {\tt gooddayx} to Bob.  Assigning numeric values to the letters {\tt a} through {\tt z} as in Table~\ref{tab:base26digits}, we obtain $(6)(14)(14)(3)(3)(0)(24)(23)$.
+ 
+ By breaking these numbers up into 1 by 2 matrices we will pre-multiply by A to encipher the letters.
+ 
+ \begin{align*} 
+ A
+ \begin{bmatrix}
+    6 \\
+    14 
+\end{bmatrix} &= 
+\begin{bmatrix}
+    34 \\
+    74
+\end{bmatrix}\\
+A
+ \begin{bmatrix}
+    14\\
+    3 
+\end{bmatrix} &= 
+\begin{bmatrix}
+    20\\
+    54
+\end{bmatrix}\\
+A
+ \begin{bmatrix}
+    3 \\
+    0 
+\end{bmatrix} &= 
+\begin{bmatrix}
+    3 \\
+    9
+\end{bmatrix}\\
+A
+ \begin{bmatrix}
+    24 \\
+    23
+\end{bmatrix} &= 
+\begin{bmatrix}
+    7 \\
+    164
+\end{bmatrix}
+\end{align*}
+
+Thus we will send the encripted message: \[34, 74, 20, 54, 3, 9, 7, 164.\]
+
+\end{example}
+
+\begin{example} Bob deciphers it and sends back : \[47, 113, 18, 50, 36, 86, 49, 101.\]
+In order to decipher it, we break the numbers up into 1 by 2 matrices.
+ \begin{align*} 
+ A
+ \begin{bmatrix}
+    \alpha \\
+    \beta 
+\end{bmatrix} &= 
+\begin{bmatrix}
+    47 \\
+    113
+\end{bmatrix}\\
+A
+ \begin{bmatrix}
+    \alpha \\
+    \beta 
+\end{bmatrix} &= 
+\begin{bmatrix}
+    18\\
+    50
+\end{bmatrix}\\
+A
+ \begin{bmatrix}
+    \alpha \\
+    \beta  
+\end{bmatrix} &= 
+\begin{bmatrix}
+    36 \\
+    86
+\end{bmatrix}\\
+A
+ \begin{bmatrix}
+    \alpha \\
+    \beta 
+\end{bmatrix} &= 
+\begin{bmatrix}
+    49 \\
+    101
+\end{bmatrix}
+\end{align*}
+Next, we check to see if A is invertible.
+\begin{align*}
+\det A &=
+\begin{vmatrix}
+1 & 2 \\ 
+3 & 4
+\end{vmatrix}\\
+&= -2 \\
+&\neq 0
+\end{align*}
+Since A is invertible, in order to decipher the message we have to find $A^{-1}$ and multiply it by each of the matrices.
+\begin{align*}
+A^{-1} = \frac{1}{\det |A|}
+\begin{bmatrix}
+    4 & -2 \\
+    -3 & 1
+\end{bmatrix}
+&= \frac{-1}{2}
+\begin{bmatrix}
+    4 & -2 \\
+    -3 & 1
+\end{bmatrix}
+&= 
+\begin{bmatrix}
+    -2 & 1 \\
+    \frac{3}{2} & \frac{-1}{2}
+\end{bmatrix}
+\end{align*}
+
+$A(-1)[encrypted] : 19 14 14 2 14 11 3 23$
+We then use Table~\ref{tab:base26digits} to solve the message resulting in {\tt toocoldx}. 
+\end{example}
+
+\underline{Pros of Hill Cipher:}
+\begin{itemize}
+\item Lots of possible keys for encryptions
+\item Lots of alphabets (Polyalphabetic)
+\item Foils Frequency Analysis
+\item Slightly more sophisticated math
+\item Matrices of different sizes
+\item Infinitely many invertible matrices with real entries to try
+\end{itemize}
+
+\underline{Cons of Hill Cipher:}
+\begin{itemize}
+\item Symmetric key needs to be kept private
+\item In order for it to work quickly we need technology
+\item Guessing size/values from the length and number in the cipher text
+\end{itemize}
+
+\section{Hash Functions}
+Hash functions are used as a way to identify the identity of the sender using non-invertible functions.  Hash functions are useful, because it is hard to replicate the same output, so one cannot figure out the original message.
+
+\begin{example} 
+If the user's password is set as kittyz, then the website login program would store the output of the hash function with kittyz as its input.
+\begin{center} kittyz $\rightarrow$ H(kittyz)\end{center}  When the website wants to verify the user's identity, the user types in kittyz but the website is actually checking the unique output of kittyz being inputted into the hash function\\
+\begin{center} user types: kittyz $\rightarrow$ program checks: H(kittyz) \end{center}
+\end{example}
+
+\vspace{5mm}
+More than one input could theoretically result in the same output from certain hash functions. If this were possible, then in our previous example, one could login to the same username using kittyz or dogz if dogz gave the same hash function output as kittyz.  But many articles have been written about how this should never occur for the right hash functions.\footnote{Check out arXiv.org for articles on this topic}
+
+\begin{definition} This is the definition of the word \defi{definition}.  If the word is in the Glossary, you can use \gls{algorithm} to make it a clickable link!
+\end{definition}
+
+\begin{proposition} Here's a prop.\end{proposition}
+
+\begin{example} Here's an example. \end{example}
+
+\begin{corollary}\label{cor:ExampleCorx} And a corollary.  This one is labeled so you can refer to it later.\end{corollary}
+
+You can refer to Corollary~\ref{cor:ExampleCorx} like this.
+
+\section{Here's the second section}
+You can look at Week 1 for tips.  One useful one is long division:
+
+\[
+\longdiv{05728}{26}
+\]
+
+\section{Tips from other notetakers}
+
+Use an imac for huge screen real estate!

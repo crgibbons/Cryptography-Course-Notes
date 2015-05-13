@@ -1,0 +1,265 @@
+
+\begin{chapquote}{Someone said this}
+``This was said.''
+\end{chapquote}
+
+\section{RSA Flaws}
+
+We began this week with a discussion on the findings of the paper "Ron was wrong, Whit is right." 
+The paper concluded that the RSA encryption system is 99.8 percent secure, meaning only .2 percent of public keys were found to be flawed in some way. However it also concluded that other systems of public key encryption were more secure.
+The most common flaws found were \\ $\longrightarrow$ Shared RSA moduli \\ $\longrightarrow$ shared RSA moduli Factors \\ $\longrightarrow$ "Stupid" keys such as $n$ being prime or even
+
+
+
+
+\section{Primality Testing}
+
+Understandably, there is massive incentive in the cybersecurity world to determine whether a large number is prime. This has led to several conjectured primality tests for when $n>2$ is odd:
+
+\begin{center}
+    \begin{tabular}{p{4cm}|p{4cm}|p{4cm}}
+     \emph{Idea} & \emph{Pros} &\emph{Cons} \\ \hline
+     Factor $n$. & You also get the factors of $n$. & Computationally impossible. \\ \hline
+     $(n|ab \Rightarrow n|a \textrm{ or } n|b)$ for all $a,b
+     \Leftrightarrow n$ is prime.
+     & Doing long division once or twice is easy.
+     & We have to check all $a,b$. \\ \hline
+     $\phi(p)=p-1 \Leftrightarrow p$ is prime & Easy to work with & Requires that we factor $n$ first \\ \hline
+     Fermat's Little Theorem: $\forall a \in \mathbb Z, a^p \equiv a \mod p$ if $p$ is prime.
+     & No factoring! Only need to check $a<p$. 
+     & Not an ``iff'' test; there exist composite $n$ where $a^n \equiv a \mod n$. 
+    \end{tabular}
+\end{center}
+
+It turns out that it's okay that F$\ell$T isn't a biconditional test. For example, consider $n=561 = 3 \times 11 \times 17$.
+
+\begin{example} $\forall z \in \mathbb Z$, $$a^{561} \equiv a \mod 561.$$ \end{example}
+\begin{proof}
+Observe that
+\begin{align*}
+a^{561} \equiv a \mod 561 &\iff 561 | a^{561}-a \\
+&\iff 3|a^{561}-a, 11|a^{561}-a, 17|a^{561}-a \\
+&\iff a^{561} \equiv a \mod 3, a^{561} \equiv a \mod 11, a^{561} \equiv a \mod 17.
+\end{align*}
+So it suffices to prove that $a^{561} \equiv a$ modulo 3, modulo 11, and modulo 17. Proving $a^{561} \equiv a \mod 3$ and $a^{561} \equiv a \mod 11$ is left as an exercise to the reader. We will demonstrate here that $a^{561} \equiv a \mod 17$ for all $a$, using fast exponentiation and F$\ell$T. Since 17 is prime, we have that $a^{17} \equiv a \mod 17$. Observe that 
+\begin{align*}
+a^{561} &\equiv \left(a^{17}\right)^{3\times11} \mod 17 \\
+&\equiv \left(a^{17}\right)^{33} \mod 17 \\
+&\equiv a^{33} \mod 17 \\
+&\equiv a^{16}a^{17} \mod 17 \\
+&\equiv a^{16}a\mod 17 \\
+&\equiv a^{17} \mod 17 \\
+&\equiv a \mod 17.
+\end{align*}
+\end{proof}
+
+It turns out that 561 is what's called a \emph{Carmichael number}, a composite number $n$ for which $a^n \equiv a \mod n$ for all $a \in \mathbb Z$. 
+
+\begin{proposition} \label{Carmichael prop} $n$ is a Carmichael number iff:
+\begin{enumerate}
+\item $n$ has no repeated prime factors (i.e. $n$ is ``square-free''), and 
+\item whenever $p$ is prime and $p|n$, then $(p-1)|(n-1)$. 
+\end{enumerate}
+\end{proposition}
+
+\begin{example} Using proposition \ref{Carmichael prop}, we can easily show that 1105 is another Carmichael number, because $1105 = 5 \times 13 \times 17$, and $4|1104$, $12|1104$, and $16|1104$. Neat, huh? \end{example}
+
+This has the potential to cause huge problems for RSA encryption. How many Carmichael numbers are there? As we'll soon see, there aren't very many. 
+
+\begin{definition} We define a \defi{Fermat Pseudoprime} as a composite number that passes the F$\ell$T primality test (Carmichael numbers). In general, a pseudoprime refers to a composite or a number whose primality is not proven.
+
+In 2002 the AKS primality test was discovered: $1^{st}$ primality test that was in poly-time. It is a polynomial version of F$\ell$T
+$$(x - a)^{n} \equiv (x^{n} - a) \mod n,$$
+iff n is prime. Main idea of proof:
+
+$$ {n \choose x} \equiv  0  \mod n$$
+for $1 \leq k \leq (n-1)$, iff n is prime.
+\\
+
+Modify this relationship using the theory of ideals in $\mathbb{Q}[x]$. This allows you to cut out a lot of the computations. Yields an algorithm that's 
+$\mathcal{O}((\ln{n})^{12})$. Output is deterministic (says "Yes" or "No", and it's 100\% right).
+
+\subsection{Miller's Primality Test (not deterministic)}
+Uses the fact that $x^{2} \equiv 1 \mod p$ has only 
+
+$x \equiv 1 \mod p$ 
+
+$x \equiv -1 \equiv p-1 \mod p$ 
+
+\noindent if p is prime.
+
+\subsection{Miller's Primality Test Algorithm}
+
+\textbf{\underline{Input:}} $n > 2$, odd integer.
+
+
+\noindent \textbf{\underline{Step 0:}} Pick a base $b$, $1 < b < n$: calculate $d = \gcd(b, n)$.
+If $d \ne 1$, n is composite. 
+
+
+\noindent \textbf{\underline{Step 1:}} Calculate $a_{1} = b^{n - 1} \% n $ if $a_{1} \ne 1$, then n is composite by F$\ell$T.
+
+
+\noindent \textbf{\underline{Step 2:}} Calculate $a_{2} = b^{(n-1)/2} \% n$ (use fast exponentiation).
+$$[a_{2}^{2} \equiv (b^{(n-1)/2})^2 \mod n \equiv b^{n-1} \mod n \equiv 1]$$
+
+If $a_{2} \not equiv 1 \mod n$, it fails the fact, thus n is composite.
+
+If $a_{2} \equiv -1 \mod n$, we can't do anything else,
+    
+    \quad \textbf{STOP:} $n$ is a strong pseudoprime with respect to this $b$.
+
+If $a_{2} \equiv 1 \mod n$, but $\dfrac{n-1}{2}$ is odd,
+    
+    \quad \textbf{STOP:} $n$ is a strong pesudoprime with respect to base $b$.
+    
+If $a_{2} \equiv 1 \mod n$ and $\dfrac{n-1}{2}$ is even, repeat Step 2.
+
+\noindent \textbf{\underline{Step 3:}} $a_{3} = b^{(n-1)/4} \% n$
+
+Terminates ($n$ is prime)
+
+
+\begin{example}
+$n = 121, b = 3$
+
+\textbf{Step 0: } $\gcd(121, 3) = 1$ (because 3 doesn't divide 121)
+
+
+\textbf{Step 1: }
+
+\quad F$\ell$T: $3^{120} \% 121$
+
+\quad $ 3^{120} = (3^{5})^{24} = (243)^{24} \equiv 1 \mod 121$
+
+\textbf{Step 2: }
+
+\quad $3^{60} = (3^{5})^{6} \equiv 1 \mod 121$, 60 is even
+
+\textbf{Step 3: }
+
+\quad $3^{30} = (3^{5})^{6} \equiv 1 \mod 121$, 30 is even
+
+\textbf{Step 4: }
+
+\quad $3^{15} \equiv (3^{5})^{3} \equiv 1 \mod 121$, but 15 is odd.
+
+$\longrightarrow 121$ is a strong pseudoprime with respect to base 3.
+
+However, $121 = 11^{2}$ [Not actually prime].
+\end{example}
+
+\begin{itemize}
+\item You can still get a pseudoprime with this
+\item You can pick a different base and try again.
+\end{itemize}
+
+\noindent \begin{theorem}
+If n is a composite odd integer, there are at most $\dfrac{n}{4}$ bases b for which n is a strong pseudoprime.
+\end{theorem}
+
+\underline{Bad News: } One quarter of choices for b returns a "false positive".
+
+\underline{Good News: } Given an odd integer $n$, the probability that base $b$,
+$1 < b < n$ returns a false positive is 25\%. The probability that \textit{two} bases return a false positive is $\dfrac{1}{4^{2}}$
+
+
+\subsection{Rabin's Test}
+Input: $n$, the number being factored; $k$, the number of bases to try in Miller's test. Procedure: Do Miller's test for $k$ random bases.
+If all tests pass, $n$ is most likely a prime (1 - $\dfrac{1}{4^{k}}$ probability).
+
+\section{Elliptic curves}
+\begin{definition} Suppose $x^3 + ax + b$ is a polynomial with a, b $\in \mathbb{R}$ with no multiple roots. An elliptic curve over $\mathbb{R}$ is the set of points (x, y) $\in \mathbb{R^2}$ satisfying $x^3 + ax + b - y^2 = 0$.
+\begin{example} $y^2 = x^3 - 4x (+0)$.
+
+\underline{To sketch}: 
+\item Find roots
+\item RHS:$x(x^2 - 4)$. So we have 3 roots, namely $x=0, x=2$ and $x= -2$ and $y^2$ forces symmetry across the x-axis.
+\item Find extrema: Look at derivatives
+\item 
+
+$$\frac{d}{dx} (y^2) = \frac{d}{dx} (x^3 - 4x)$$
+$$2y \frac{dy}{dx} = 3x^2 - 4$$
+\item So we have $3x^2 - 4 = 0$, which means the extrema occur at $x= \pm \frac{2}{\sqrt{3}}$.
+\item Now 
+$$y^2 = (\frac{-2}{\sqrt{3}})^3 - 4(\frac{-2}{\sqrt{3}}) > 0$$
+$$but$$
+$$y^2 = (\frac{2}{\sqrt{3}})^3 - 4(\frac{2}{\sqrt{3}}) > 0$$.
+\item So the graph of E: $y^2 = x^3 - 4x (+0)$ is sketched below:
+\begin{center}
+	\begin{tikzpicture}[domain=-1.769292354238631:2.5, samples at ={-1.41421356237, -1.4, -1.38, ..., -0.02, 0, 1.41421356237, 1.42, 1.44, ..., 2, 2.1, ..., 3}]
+		\draw[->, color=red] plot (\x,{sqrt(\x^3-2*\x)}) node[right] {$y^2=x^3-4x$};
+		\draw[->, color=red] plot (\x,{-sqrt(\x^3-2*\x)}) node[right] {};
+		\draw[->, thick] (-2.2,0) -- (3.2,0) node[right] {$x$};
+		\draw[->, thick] (0,-2.2) -- (0,4.2) node[above] {$y$};
+		
+
+	\end{tikzpicture}
+\end{center}
+
+
+
+\subsection{Defining Addition on Elliptic Curves}
+\item Let E: $y^2 = x^3 - 4x$ be an elliptic curve.
+\item Let $P = (x_{0}, y_{0})$ on E and let $Q = (x_{1}, y_{1})$ on E. 
+
+\item What is $P + Q$?
+\item The point $P + Q$ is defined as shown in the following graph:
+
+\begin{center}
+	\begin{tikzpicture}[domain=-1.769292354238631:2.5, samples at ={-1.41421356237, -1.4, -1.38, ..., -0.02, 0, 1.41421356237, 1.42, 1.44, ..., 2, 2.1, ..., 3}]
+		\draw[->, color=red] plot (\x,{sqrt(\x^3-2*\x)}) node[right] {$y^2=x^3-4x$};
+		\draw[->, color=red] plot (\x,{-sqrt(\x^3-2*\x)}) node[right] {};
+		\draw[->, thick] (-2.2,0) -- (3.2,0) node[right] {$x$};
+		\draw[->, thick] (0,-2.2) -- (0,4.2) node[above] {$y$};
+
+		\draw[color=blue] (-1.35, -0.489515066162) node[left] {$p$};
+		\draw[color=blue] (-1.35, -0.489515066162) node[] {$\bullet$};
+		\draw[color=blue] (-0.1, 0.446094160464) node[left] {$q$};
+		\draw[color=blue] (-0.1, 0.446094160464) node[] {$\bullet$};
+		\draw[-, color=blue] (-1.35, -0.489515066162) -- (2.0102293, 2.025567) node[] {};
+		\draw[color=blue] (2.0102293, 2.025567) node[] {$\bullet$};
+		\draw[color=blue] (2.0102293, 2.025567) node[right] {$p*q$};
+		\draw[-, color=purple, dashed] (2.0102293, 2.025567) -- (2.0102293, -2.025567) node[] {};
+		\draw[color=purple] (2.0102293, -2.025567) node[] {$\bullet$};
+		\draw[color=purple] (2.0102293, -2.025567) node[right] {$p + q$};
+	\end{tikzpicture}
+\end{center}
+
+\begin{definition}
+A group G is a set with an operation * where 
+\begin{itemize} 
+\item $g * h \in G \forall g, h \in G$ (Closed under *)
+\item $(g * h) * f = g * (h * f) \forall g, h, f \in G$ (Associative)
+\item $\exists e \in G$ such that $ e * g = g * e = g \forall g \in G$ (Identity)
+\item $\forall g \in G, \exists g^{-1} \in G$ where $g * g^{-1} = g^{-1} * g = e$. (Inverses)
+\item Furthermore:
+If $g * h = h * g \forall g, h \in G$, (Commutative), then G is called Abelian
+\end{itemize}
+
+\underline{Facts}
+\item The identity is unique, $g^{-1}$ is unique for each $g$.
+\item \underline{Question}: Does E have an identity?
+\item Yes! It is $\mathcal{O}$, the point at infinity.
+\item We define: $P + \mathcal{O} = P = \mathcal{O} + P$.
+
+\subsection{Rules of Addition}
+\begin{enumerate}
+\item $P + \mathcal{O} = P = \mathcal{O} + P \forall P \in E$, including $\mathcal{O}$. So $\mathcal{O} + \mathcal{O} = \mathcal{O}$.
+\item When $P = (x_{0}, y_{0}), Q = (x_{1}, y_{1})$:
+\begin{itemize}
+\item If $x_{0} \neq x_{1}$, then $\ell = \overline{PQ}$ intersects E at a third point $R = (x_{2}, y_{2})$, 
+\item then define $P + Q = P - P =\mathcal{O}$.
+\item If $x_{1} = x_{0}$, then we say $Q = -P$ and we define $P + Q = P - P = \mathcal{O}$.
+\item If $P = Q$, let $\ell$ be the tangent line to the curve $P$.
+\item If there's a second point of intersection $R$, then $P + P = -R$. 
+\end{itemize}
+\end{enumerate}
+
+
+
+
+
+
+
+

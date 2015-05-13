@@ -1,0 +1,71 @@
+\begin{chapquote}{Someone said this}
+``This was said.''
+\end{chapquote}
+
+\section{Innovations at the 19th Century/Early 20th Century}
+\underline{Radio} \begin{itemize} \item Wireless (Pro) \item Goes anywhere and is transmitted in all directions (both Pro and Con) \item Catalyst for cryptography \end{itemize}
+\underline{Traffic analysis} \begin{itemize} \item No "cracking" involved \item Enables you to determine which morse code operator sent the message \item Enables you to have a rough idea of the location of the message \item Used to track battalions \item It is used today for an app called "Yo", and there are issues around the NSA wanting metadata from our texts and emails (i.e. so that they can conduct traffic analysis) \end{itemize}
+\underline{One-time pad} \begin{itemize} \item Notebook of randomly generated keys (at least as long as the intended message) \item Ex: The random vigen\'ere key BAACTDF.... would be used to both encrypt and decrypt a message \item In theory: it is uncrackable \begin{itemize} \item Large number of keys \item A key is never reused \item You can not tell when you have decrypted "the" message \end{itemize} \item in practice: \begin{itemize} \item It is difficult to distribute \item Everybody must be up-to-date on which page to use \item It is slow to encrypt and decrypt \item It is expensive and difficult to produce thousands of random number keys \end{itemize} \item Reserved for really special uses (for example, messages between the U.S. president and the president of Russia) \end{itemize}
+
+\section{Permutations in Order to Understand Enigma}
+\begin{definition}A \defi{scrambler} is a physical mechanism for Caesar shifts, and if the inner alphabet is random, then also used for other substitutions. \end{definition}
+\begin{definition} A \defi{permutation} of S = $\{$0,1,...,n $\}$ is a one-to-one and onto function from S to itself. \end{definition}
+
+\begin{example}
+Let S = $\{$0, 1, 2, 3$\}$ The following is an example of a permutation: \par $\sigma$(0) = 3, \par $\sigma$(1) = 0, \par $\sigma$(2) = 2, \par $\sigma$(3) = 1. \par \medspace To find $\sigma^{-1}$, simply reverse the order and see what was "plugged into" $\sigma$ to get the number you are interested in. Therefore, \par $\sigma^{-1}$(0) = 1, \par $\sigma^{-1}$(1) = 3, \par $\sigma^{-1}$(2) = 2, \par $\sigma^{-1}$(3) = 0. \par For this particular example, the \defi{cycle notation} would sound like "zero goes to three goes to one goes to zero, and two goes to two." This is written as (031)(2), which is commonly just written as (031) because the permutation does not affect the number two at all. \par Note that (031) is the same permutation as (310) and (103) \end{example} \par
+
+\subsection{Cycle Composition}
+\par Let $\gamma$ = (251) and $\sigma$ = (124). \par
+Note that $\gamma\circ\sigma$ (1) = $\gamma$(2) = 5 \par $\gamma\circ\sigma$ (2) = $\gamma$(4) = 4 \par $\gamma\circ\sigma$ (3) = $\gamma$(3) = 3 \par $\gamma\circ\sigma$ (4) = $\gamma$(1) = 2 \par $\gamma\circ\sigma$ (5) = $\gamma$(5) = 1 \par Therefore, in cycle notation, $\gamma$ $\sigma$ = (15)(24). \par A faster way to do cycle composition is to write $\gamma\circ\sigma$ = (251)(124) and read from right to left while performing permutations. \par \begin{definition} (15) and (24) are both considered \defi{transpositions}, which are simply 2-cycles. \end{definition}  \par \begin{example}For practice: (152)(2456)(162) = (2564) \end{example}
+
+\section{One-Time Pad}
+\begin{example}One-Time Pad in action. \\ 
+plaintext: enigma \\
+key: RXKYVI \\
+Ciphertext: VKSEHI \\
+Intercept: VKSEHI \\
+If the key were UKFETI, possible plaintext would be "banaoa" \\
+If the key were GWZEOU, possible plantext would be "potato" \end{example} 
+Take away point: The strength is \textbf{true randomness}.  That is, every possible 6-character key is equally likely.
+\section{Permutations Continued} \par 
+
+\begin{proposition} 1.Disjoint cycles commute (remember that disjoint means there are no digits in common among the cycles) \par 2. Every (finite) permutation can be written as a product of disjiont cycles. \end{proposition} 
+
+\begin{example} (036)(245) = (245)(036) \end{example}
+
+\subsection{Inverses}  $(AB)^{-1}$ = $B^{-1}A^{-1}$ \\  Cycles: reverse the order, reverse each cycle. \begin{example} $((1239)(48)(576))^{-1}$ = $(576)^{-1}(48)^{-1}(1239)^{-1}$ = (675)(84)(9321) = (567)(48)(1932) = (1932)(48)(567) \end{example}
+
+Notice that (1932), (48), and (567) are disjoint, and thus could be written in an order with the smallest number first.  \begin{example} Define $\gamma$ = (251) and $\sigma$ = (124).\\ ($\gamma \sigma)^{-1}$ = $\sigma^{-1}$$\gamma^{-1}$ = (142)(152) = (15)(24) \\ Now observe the reverse order: \\ ($\sigma \gamma)^{-1}$ = $\gamma^{-1}$$\sigma^{-1}$ = (152)(142) = (14)(25) \\Thus, order matters!!
+\section{Enigma Machine} First key press: \\a$\rightarrow$ Z \\z$\rightarrow$ A \\Second key press: first rotor clicks around once \\\\\textbf{ Symmetric key system}: same key is used to encipher and decipher (i.e. same plugboard, rotor positions) \\\\Number of possible keys = $(26C10)^{2}*10!*26^{3}*3!$ \\ \par Where $(26C10)^{2}*10!$ represents the plugboard, $26^{3}$ refers to the rotor settings, and $3!$ denotes the rotor positions. 
+\section{Mininigma} The mininigma has one rotor, one reflector, and five letters. \begin{example} Let $r_{1}$ = (01324), f = (04)(13),  $r_{1}^{-1}$ = (04231). \\Let's observe what the first key press would look like: \\ We know that 
+a$\rightarrow$0, b$\rightarrow$1, c$\rightarrow$2, d$\rightarrow$3, e$\rightarrow$4. \\Applying  $r_{1}$ yields the following: 
+\\ a$\rightarrow$0 $\longrightarrow$1 \\ b$\rightarrow$1 $\longrightarrow$3
+\\c$\rightarrow$2 $\longrightarrow$4 \\d$\rightarrow$3 $\longrightarrow$2 \\
+e$\rightarrow$4 $\longrightarrow$ 0 
+\\ Now let's apply f and $r_{1}^{-1}$.
+\\a$\rightarrow$0$\longrightarrow$1$\longrightarrow$3$\longrightarrow$1$\rightarrow$ B \\ b$\rightarrow$1$\longrightarrow$3$\longrightarrow$1$\longrightarrow$0$\rightarrow$ A \\c$\rightarrow$2$\longrightarrow$4$\longrightarrow$0$\longrightarrow$4$\rightarrow$ E \\ d$\rightarrow$3$\longrightarrow$2$\longrightarrow$2$\longrightarrow$3$\rightarrow$ D \\e$\rightarrow$4$\longrightarrow$0$\longrightarrow$4$\longrightarrow$2$\rightarrow$ C \end{example}
+\begin{example} Now we look at what happens on the second key press. We add a new permutation for the rotation of the rotor, $\rho$ = (01234). Note that n rotations of the rotor gives $\rho ^n$ and when n=5, the rotor is back where is started.
+\\ After one rotation, we apply the rotation first, then apply $r_{1}^{-1}f r_{1}$ and get:
+\\a$\rightarrow$0$\longrightarrow$1$\longrightarrow$A\\ b$\rightarrow$1$\longrightarrow$2$\longrightarrow$E \\c$\rightarrow$2$\longrightarrow$3$\longrightarrow$D \\ d$\rightarrow$3$\longrightarrow$4$\longrightarrow$C \\e$\rightarrow$4$\longrightarrow$0$\longrightarrow$B
+\\In general, on the nth key press, the output is $r_{1}^{-1}f r_{1} \rho^{n-1}$(input).
+\begin{example} ace is enciphered as follows:
+\\a$\rightarrow$0$\longrightarrow$0$\longrightarrow$B\\ c$\rightarrow$2$\longrightarrow$3$\longrightarrow$D\\e$\rightarrow$4$\longrightarrow$1$\longrightarrow$A
+\\Luckily, we also find that bda is encipherd as ACE, so the machine is functioning with symmetric enciphering and deciphering as intended.\end{example}
+\section{Back to the Actual Enigma} The actual Enigma Machine is far more complicated. For starters, we'll add the permuation b, which standards for the plugboard. This scrambles 10 letters initially. Next, it has 3 rotors, $r_{1}, r_{2},$ and $r_{3}$. The reflector is the same as before, but now the rotation permutation contains all 26 letters instead of just the first 5.
+\\ Let's investigate what happens on the nth key press.
+\\\\n=1: $r_{1}^{-1}r_{2}^{-1}r_{3}^{-1}fr_{3}r_{2}r_{1}b$(input).
+\\n=2: $r_{1}^{-1}r_{2}^{-1}r_{3}^{-1}fr_{3}r_{2}r_{1}\rho b$(input).
+\\3$\leq$n$\leq$26:$r_{1}^{-1}r_{2}^{-1}r_{3}^{-1}fr_{3}r_{2}r_{1}\rho^{n-1} b$(input).
+\\n=27:$r_{1}^{-1}r_{2}^{-1}r_{3}^{-1}fr_{3}r_{2}\rho r_{1}b$(input).
+\\\\ Rotor 2 rotates for the first time on the 27th key press, and rotor 3 rotates for the first time on the 677th key press ($26^{2}+1$).
+\\In order to write down the permutation for n in general, it will be useful to write n in base 26.
+\\\\n=$x\times 26^{2} + y\times 26 + z$, where x,y, and z are all digits.
+\\\\ Then on the nth key press, we get:
+\\$r_{1}^{-1}r_{2}^{-1}r_{3}^{-1}fr_{3}\rho^{x}r_{2}\rho^{y}r_{1}\rho^{z-1} b$(input).
+\subsection{Messages} 
+-Start with a daily key.                      (CRG)
+\\-Now decide on a message key.                 (JHD)
+\\-Type jhdjhd enciphered by the daily code.    (CRG)
+\\-Now set machine to JHD and write the message.
+\\\\If we know this process, it gives us a lot of information. Suppose the daily key is $\alpha_{1} \alpha_{2} \alpha_{3}$ and the message key is $\beta_{1} \beta_{2} \beta_{3}$ for a specific message.
+\\ This tells us that $\alpha_1$ is enciphered as $\beta_1$ and also that on the 4th key press, $\rho^{3} \alpha_{1}$ is encihpered as $\beta_{1}$.

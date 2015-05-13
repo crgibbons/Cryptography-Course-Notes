@@ -1,0 +1,82 @@
+
+\begin{chapquote}{Clay Shirky}
+``It used to be expensive to make things public and cheap to make them private. Now it’s expensive to make things private and cheap to make them public.''
+\end{chapquote}
+
+\section{RSA Encryption}
+
+Recall Euler's Theorem: if $ gcd(m,n) = 1 $, then $ m^{ \phi (n)} \equiv 1 modn $. RSA encryption relies on this theorem, yet there was concern about whether or not we meet the hypothesis that $ gcd(m,n) = 1 $. In practice, $n$ is the product of two very large primes, so assuming that the message $m$ does not exceed 150 base-10 digits in length, $ gcd(m,n) = 1 $. Thus we can indeed use the result given by Euler's Theorem.
+
+\begin{example}
+Continued from last week's example, suppose Bob wants to send the message $ (NOWAY)_{26}$ to Alice, and suppose $ (NOWAY)_{26} > n$ for the primes he has picked. Then $ (NOWAY)_{26} \neq  (NOWAY)_{26} \% n$, so the message will be changed upon decryption.
+
+Suppose the largest possible 4-digit base-26 number exceeds $n$, but the largest 3-digit base-26 number is less than $n$. Then Bob combats this problem by splitting the message into 3-digit base-26 numbers. Then the messages to encode are $m_1 = NOW$ and $ m_2 = AYZ$. These are encrypted to $S_1 = (PRI)_{26}$ and $S_2 = (BZTB)_{26}$.
+
+However, if Bob were to send the message "PRIBZTB", Alice would be unsure how to split it up before decryption. To solve this issue, Bob finds the number of digits in the base-26 representation of $n-1$. He then pads the beginning of his submessages with "A"s until each has 4 digits. Then in this example, $(PRI)_{26}$ becomes $(APRI)_{26}$. Recall that $A_{26} = 0$, so this change will not affect how the message is decrypted. Indeed, ${(APRI)_{26}}^{d} \% n = (NOW)_{26}$ and ${(BZTB)_{26}}^{d} \% n = (AYZ)_{26}$.
+\end{example}
+
+\begin{example}
+Pairs of students produced the following $n$-values using a 2-digit prime and a 4-digit prime, and published it along with a public encryption key $e$.
+
+\begin{table}[h]
+\begin{tabular}{llllll}
+   & Group:             & n:     & e:    & secure? & d:     \\
+1  & Zach and Kenny     & 79711  & 50    & N       &        \\
+2  & Korean BBQ         & 631447 & 1721  & N       & 418361 \\
+3  & Andrew and Richard & 46121  & 5     &         &        \\
+4  & Beth and Mer       & 300457 & 5     & N       & 235789 \\
+5  & Jeff and Dom       & 622417 & 14997 &         &        \\
+6  & Jin and Catherine  & 15233  & 17    & N       & 7433   \\
+7  & Devin and Noha     & 14417  & 17    & N       & 6257   \\
+8  & Amy and Kyle       & 51523  & 4177  &         &        \\
+9  & Lauren and Wenlu   & 30043  & 17    & N       & 8153   \\
+10 & Jake and Kelly     & 208883 & 47    &         &        \\
+11 & NG and SD          & 56233  & 67589 & N       & 36589  \\
+12 & Kat and Amy        & 84379  & 5423  &         &        \\
+13 & Sara and Adrian    & 240761 & 1129  &         &        \\
+14 & Peter and Elise    & 302219 & 6317  &         &       
+\end{tabular}
+\end{table}
+
+Professor Gibbons then gave Eric and James the task of finding as many private decryption keys $d$ as they could. They did this by checking the greatest common divisor of each pair of $n$-values. Since $gcd(300457, 56233)=53$, for example, one can tell that both Group 4 and Group 11 both used the two-digit prime 53. From this one can calculate the 4-digit prime of each group.
+
+In this case, Beth and Mer used the 4-digit prime 5669. Then $\phi(n)=(p-1)(q-1)=(53-1)(5669-1)=294736$. Then one can solve the Diophantine equation which was used to calculate $d$ in the first place: $$ed+k\phi(n)=5d+294736k=1$$. Using online tools, one can then solve for integer solutions to this equation. The least postive value of $d$ that is a solution is then the private decryption key $d$. This method tells us that Beth and Mer's private key $d$ is 235789. All insecure $d$-values are listed in the table.
+
+Note that although Group 1 shared a prime with another group and thus we can calculate $\phi(n)$, their choice of $e$ was not relatively prime to $\phi(n)$, so there are no solutions to their Diophantine equation. This is extremely secure, but also useless, since one cannot effectively send or receive encrypted messages with such an $e$.
+\end{example}
+
+\section{Factoring}
+RSA encryption is secure because it relies on the fact that given the current state of technology, factoring large primes is hard. In this section we hope to determine why factoring is so difficult. First, it will require a few definitions.
+
+\begin{definition} \defi{Computational complexity} is the rough number of operations required for an algorithm to complete relative to an input size.
+\end{definition}
+
+\begin{definition} We use \defi{big-O notation} to represent computational complexity. A function $f(n)$ is called $O(g(n))$ ("big-O of g of n") if there exists $M>0$ so that $|f(n)|\leq M|g(n)|$ for all $n\gg0$ (for all $n$ after some point).
+\end{definition}
+
+\begin{example} Let $f(n)$ be the function that outputs the number of base-10 digits of an integer $n$. We know that the number of base-10 digits in a number is roughly $\frac{\ln n}{\ln 10}$, so
+$$0<f(n)\leq\frac{\ln n}{\ln 10}+1$$
+$$\implies\lim_{n\to\infty} f(n)=\frac{1}{\ln 10}\ln n$$
+Then we say that $f(n)=O(\ln n)$.
+\end{example}
+
+\begin{example} Multiply 2 numbers. Assume $ m \leq n \in \mathbb{Z}$. Let $ n = ( d_{k-1} \ldots d_1 d_0)_{10} $ and $ m = ( c_{k-f} \ldots c_1 c_0)_{10} $ Then:
+
+\begin{tabular}{ccccc}
+ & $d_{k-1}$ & $\ldots$ & $d_1$ & $d_0$ \\
+$\times$ &   & $c_{k-f}$ & $\ldots$ & $c_0$ \\
+\hline
+  & & $c_0 ( d_{k-1} \dots d_1 d_0)$ & & $\text{k times}$ \\
+  & & $10 * c_1 ( d_{k-1} \dots d_1 d_0)$ & & $\text{k times}$ \\
+  & &. & & \\
+  & &. & & \\
+  & &. & $\text{ $k -f + 1$ times}$ & \\
+  & & $10^{k-f}c_{k -f}) ( d_{k-1} \ldots d_1 d_0)$ & & $\text{k times}$ \\
+\end{tabular}
+This algorithm that we do everyday on paper would take roughly $ ( k - f + 1) * k $ operations to complete or $ O( k^2)$. This is known as "polynomial" in $k$ number of operations. Long division works exactly the same same making $ O( k^2)$ operations to find products and divide.
+\end{example}
+
+\underline{Factoring:}
+An algorithm for factoring essentially requires checking primes to see if they divide a given integer. It is sufficient to check primes less than or equal to $\sqrt{n}$. To convince yourself of this, consider a composite integer $n$ and suppose all of its prime factors exceed $\sqrt{n}$. Then the product of its primes exceeds $\sqrt{n}^2=n$, but the product of its primes is $n$ itself, so we have reached a contradiction.
+
+Given a base-10 integer $n$, the best current algorithm for calculating $\sqrt{n}$ is $O(10^{\ln n})$. Since this is the first step to any factoring problem, any algorithm will be at least $O(10^{\ln n})$ as well, which is extremely slow for large values of $n$. We suspect that there does not exist a "fast algorithm to factoring that no one has found yet. Thus we reach the conclusion that factoring is indeed hard.

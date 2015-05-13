@@ -1,0 +1,203 @@
+\begin{chapquote}{Someone said this}
+``This was said.''
+\end{chapquote}
+
+\section{Congruences}
+
+Recall from Definition 6.2 the definition of $\defi{a is congruent to b modulo m}$. The notation that we will use in this class is, $a \equiv b \mod{m}$, which is typical of number theorists. For those more inclined towards modern algebra, the notation used is $[a]_m = [b]_m$.
+
+\begin{example}
+$m= 8, a = 13, \text{ and } b = 5$ \\ Note that $m$ is called the $\defi{modulus}$ \\ (1) Is $a \equiv b \mod{m}$? \\ \indent Observe that $a - b = 13 - 5 = 8$, and $8$ (the modulus) does divide $8$. \\
+(2) Is $b \equiv a \mod{m}$? \\ 
+\indent Observe that $b - a = 5 - 13 = -8$, and $8$ (the modulus) does divide $-8$.
+\end{example}
+
+In Example $7.1$, we have that $13 \equiv 5 \mod{8}$. In this example, $5$ is the $\defi{least nonnegative residue (LNNR)}$ \\ This can be written as $5 = 13 \% 8$. The notation of \% means ''find the LNNR".
+\\
+\\
+The LNNR's modulo $8$ are $\{0, 1, 2, . . ., 7\}$. This set makes us think of the comparison with the base-8 digits.
+\\
+\\
+\textbf{Remarks}. For $a, b$ integers, and $m$ a non-negative integer
+\\
+\begin{itemize}
+\item $a \equiv a \mod{m}$
+\item if $a \equiv b \mod{m}$, then $b \equiv a \mod{m}$
+\end{itemize}
+
+\begin{example}
+Describe the $\defi{congruence class}$ of 5 and 8: \\
+$5 \equiv 5 \mod{8}$ \\
+$13 \equiv 5 \mod{8}$ \\
+$-3 \equiv 5 \mod{8}$ \\
+$21 \equiv 5 \mod{8}$ \\
+Note that the congruence class is not singular, but rather a set of items. We can summarize the congruence class of $5$ and $8$ by saying $[5]_8 = \{ 5 + 8 k \mid k \in \mathbb{Z}\}$.
+\end{example}
+
+\begin{example}
+Fill in the blank: 
+\begin{itemize}
+\item $a$ is even if and only if $a \equiv \underline{0} \mod {\underline{2}}$ \\
+\indent Proof: $a$ is even if and only if $a = 2n$ for some integer $n$. This implies that $2$ divides $a$, and more specifically $2$ divides $(a - 0)$. Thus $a \equiv 0 \mod{2}$. 
+\item $a$ is odd if and only if $a \equiv \underline{1} \mod {\underline{2}}$ \\
+\indent Proof: Exercise is left for the reader who has too much time on his/her hands
+\end{itemize}
+\end{example}
+
+\begin{example}
+An integer $a$ is congruent to $b \mod{m}$ if and only if:
+\begin{itemize} 
+\item $b = a + km$ for some integer $k$
+\item $(ab) \mod{m} \equiv a^2 \mod{m}$
+\item $a \% m = b \% m$
+\item in base $m$, the last digit of $a$ and the last digit of $b$ are the same
+\item In the division algorithm, $a$ and $b$ have the same remainder 
+\end{itemize}
+\end{example}
+
+\begin{theorem}
+For all $a, b, c, d \in \mathbb{Z}$, and $m \in \mathbb{Z}_{>0}$, if:
+
+\begin{enumerate}
+\item $(ac) \equiv (bd) \mod{m}$
+\item $(a + c) \equiv (b + d) \mod{m}$
+\item $(a - c) \equiv (b - d) \mod{m}$
+\end{enumerate}{}
+\end{theorem}
+
+The following is a proof for (3)
+\begin{proof}
+Consider $(a - c) - (b - d) \equiv (a - b) - (c - d)$. By assumption, $a \equiv b \mod{m}$, so $m$ divides $(a - b)$. Similarly, $m$ divides $(c - d)$. Therefore, by previous homework, $m$ divides $[(a - b) - (c - d)]$. Therefore, $(a - c) \equiv (b - d) \mod{m}$.
+\end{proof}
+
+\begin{corollary}
+$(ab) \mod{m} \equiv (a \% m)(b \% m) \mod{m}$. 
+\end{corollary}
+
+\begin{example}
+What is the last digit of $8765$ x $2143$ (i.e $8765$ x $2143 \% 10$ = ?)\\
+\\
+By the given corollary, the expression is $5 \cdot 3 = 15 \equiv 5 \mod{10}$.\\
+\\Thus our answer is $5$
+\\
+\end{example}
+
+\begin{example}
+Calculate $5^{47} \mod{8}$ (LNNR)\\
+\\$5 \equiv 5 \mod{5}$
+\\$5^2 = 25 \equiv 1 \mod{8}$
+\\$5^4 = (5^2)^2 \equiv 1^2 \mod{8} \equiv 1 \mod{8}$
+\\$5^8 = 5^{16} = 5^{32} \equiv 1 \mod{8}$
+\\$5^{47} = 5^{32 + 8 + 4 + 2 + 1} \equiv 1 \cdot 1 \cdot 1 \cdot 1 \cdot 5 \equiv 5 \mod{8}$.
+\\
+\\ Faster still:\\
+$5^{47} = (5^2)^{23} \cdot 5 = 1 \cdot 5 \equiv 5$ mod $8$
+\end{example}
+
+\section{Algorithm: Fast Exponentiation}
+
+Input: $a^k \mod{m}$
+\\Figure out: $k$ as a sum of powers of $2$ (Ex: $47 = 32 + 16 + 8 + 4 + 1$)
+\\Square and reduce repeatedly: $a^2, a^4, a^8, ..., a^2l$  
+\\Multiply and reduce to get the answer
+\\
+\begin{example}
+Calculate $5^{47} \mod{9}$ using:
+\begin{enumerate}
+\item Fast Exponentiation
+\item Clever Way
+\end{enumerate}
+
+\begin{enumerate}
+\item $(5^2) \equiv 7 \mod{9}$
+\\$(5^4) \equiv 7^2 \mod{9}$
+\\$(5^8) \equiv 4^2 \equiv 16 \equiv 7 \mod{9}$
+\\$5^{16} \equiv 4 \mod{9}$
+\\$5^{32} \equiv 7 \mod{9}$
+\\$5^{32} \cdot 5^8 \cdot 5^4 \cdot 5^2 \cdot 5 \equiv 7 \cdot 7 \cdot 4 \cdot 7 \cdot 5 \mod{9}$
+\\$ \equiv 7^2 \cdot 4 \cdot 7 \cdot 5 \mod{9}$.
+\\$ \equiv 4^2 \cdot 7 \cdot 5 \mod{9}$
+\\$ \equiv 7^2 \cdot 5 \mod{9}$
+\\$ 4 \cdot 5 \mod{9}$
+\\$ 20 \equiv 2 \mod{9}$
+\\
+\item $5^3 \equiv -1 \mod{9}$
+\\$5^{47} \equiv (5^3)^{15} \cdot 5^2$
+\\$ \equiv (-1)^{15} \cdot 7$
+\\$ \equiv -7 \mod{9}$
+\\$ \equiv 2 \mod{9}$
+\end{enumerate}
+\end{example}
+
+Question: Can we find a specfic value of $k$ in $5^k \equiv 2 \mod{9}$?
+\\This is effectively impossible. In fact, the RSA encryption system takes advantage of this to ensure its security.
+
+\section{Divisibility Tests}
+\begin{theorem}
+An integer $n$ is divisible by $2$ iff its last base-10 digit is divisible by $2$.
+\end{theorem}
+
+\begin{proof}
+Suppose $n = (d_{k-1} \text{  } d_{k-2} ... d_1 \text{  } d_0)_{10}$. That is,
+\begin{align*}
+n &= d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_110 + d_0 \\
+&= 10(d_{k-1}10^{k-2} + d_{k-2}10^{k-3} + ... + d_1) + d_0 \\
+&= 2m + d_0
+\end{align*}
+where $m = 5(d_{k-1}10^{k-2} + d_{k-2}10^{k-3} + ... + d_1)$.
+This means that $n \equiv d_0 \mod{2}$ because $n=2m + d_0$ implies that $n-d_0 = 2m$. Thus, $n$ is even iff $d_0 \equiv 0 \mod{2}$, ie, $d_0$ is even.
+\end{proof}
+
+\bigskip
+\noindent
+\textbf{List of Divisibility Tests:}
+
+\begin{theorem}
+An integer $n$ is divisible by $3$ iff the sum of its digits is divisible by $3$.
+\end{theorem}
+
+\begin{theorem}
+An integer $n$ is divisible by $4$ iff the last $2$ digits of $n$ is a multiple of $4$.
+\end{theorem}
+
+\begin{theorem}
+An integer $n$ is divisible by $5$ iff the last digit of $n$ is $0$ or $5$.
+\end{theorem}
+
+\begin{theorem}
+An integer $n$ is divisble by $6$ iff $n$ is divisible by $2$ and $3$.
+\end{theorem}
+
+\begin{theorem}
+For $n = (d_{k-1} \text{  } d_{k-2} ... d_1 \text{  } d_0)_{10} \in \mathbb{Z}$, $n$ is divisible by $7$ iff $m=(d_{k-1} \text {  } d_{k-2} ... d_1)_{10} - 2d_0$ is divisible by $7$.
+\end{theorem}
+
+\begin{proof}
+Let $l = (d_{k-1} \text{  } d_{k-2} ... d_1)_{10}$. Then $n = 10l + d_0$. This means
+\begin{align*}
+n &\equiv (10l + d_0) \mod{7} \\
+&\equiv 3l - 6d_0 \mod{7} \\
+&\equiv 3(l-2d_0) \mod{7}.
+\end{align*}
+In order for $n$ to be congruent to $0 \mod{7}$, we need $3(l-2d_0)$ to be divisible by $7$, which is prime. Since $7$ must divide one of the factors and $7 \nmid 3$, we have $7 \mid (l-2d_0)$.
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $2^k$ iff its last k-digits are divisible by $2^k$.
+\end{theorem}
+
+\begin{theorem}
+An integer $n$ is divisible by $9$ iff the sum of its digits is divisible by $9$.
+\end{theorem}
+
+\bigskip
+\noindent
+Proof of Theorem 7.2, 7.3, 7.4, 7.5, 7.7 and 7.8 deferred to next week.
+
+\bigskip
+\begin{example}
+Is $686$ divisible by $7$? \\
+$2 \cdot 6 = 12$ \\
+$68 - 12 = 56$ \\
+Since $7 \cdot 8 = 56$, $56$ is divisible by 7. Therefore, $686$ is divisible by $7$.
+\end{example}

@@ -1,0 +1,50 @@
+\begin{chapquote}{Anonymous Professor}
+``You're the kind of people I'd want to have a beer with, but not in class.''
+\end{chapquote}
+
+\section{Quantum Key Sharing}
+
+As we discussed last week, we can create a shared private key using polarized photons and interpreters.
+
+\begin{example} Alice and Bob create a shared secret code.  We'll use playing cards as photons.  Our interpreters work as follows:
+
+\begin{center}
+\begin{tabular}{l | l}
+Interpreter $+$ & Interpreter $\times$ \\
+\hline
+Red ($\heartsuit$ or $\diamondsuit$) $\mapsto \, 1$ & Odd $\mapsto \, 1$ \\
+Black ($\spadesuit$ or $\clubsuit$) $\mapsto \, 0$ & Even $\mapsto \, 0$
+\end{tabular}
+\end{center}
+
+Alice arranges six interpreters, $++\times\times\times\times$.  She wants to transmit the code $100101$, so she pulls cards out of a deck so that the first card is red, the second card is black, the third card is even, the fourth card is odd, the fifth card is even, and the last card is odd: \[
+8\heartsuit \, 3 \spadesuit \, 8 \clubsuit \, 3 \clubsuit \, 4 \heartsuit \, 7 \clubsuit
+\]
+Alice sends these cards to Bob.
+
+Bob's got six interpreters arranged $\times\times++\times\times$, so he sees Alice's cards as even, odd, black, black, even, odd.  This yields the string $010001$.
+
+Alice calls Bob and tells him ``$++\times\times\times\times$'' and Bob replies, ``last two bits.'' Bob says this because these are the only bits for which they used the same interpreters.
+
+Their shared secret is the binary string $01$.
+\end{example}
+
+We can also investigate what happens if Odette eavesdrops on the package of cards.
+
+\begin{example}
+Odette's interpreters are arranged $+\times++\times+$ and hence, in the previous exchange, she records the binary string $110000$.  Since she did not use the same interpreters as Alice and Bob for the last two bits, she doesn't know the last digit of their shared secret.  There's .5 probability that the secret is $00$, as Odette observed, and a .5 probability that the secret is $01$.
+
+In practice, however, Odette's eavesdropping changes the photons (or in this case, the cards) that are transmitted to Bob.
+
+For example, Alice transmits \[
+8\heartsuit \, 3 \spadesuit \, 8 \clubsuit \, 3 \clubsuit \, 4 \heartsuit \, 7 \clubsuit
+\]
+
+Since Odette observes only one characteristic -- color or parity -- she transmits a card with at least one correct attribute (but not necessarily all of the correct attributes).  With her interpreters above, then, her observation might change the cards to read 
+\[A \heartsuit \, 9 \diamondsuit \, 4 \clubsuit \, 10 \clubsuit \, 8 \diamondsuit \, 4 \spadesuit
+\]
+
+Now Bob's interpreters translate these cards to the string $110000$.  His last two bits no longer agree with Alice's last two bits because Odette has changed the cards midstream.  When Alice and Bob attempt to use their shared secret, Alice will assume they're using $01$ and Bob will assume they're using $00$.  This leads to garbled information, and they can deduce that someone has been watching their photons.
+\end{example}
+
+Notice that if Odette had accidentally transmitted $5 \spadesuit$ as the last card, Alice and Bob would have matching keys and wouldn't know that Odette had eavesdropped.  Odette, however, still wouldn't know the shared secret because she does not have a matching interpreter in the last position.  Not only does eavesdropping potentially leave a trace--it doesn't really do any good, either.  The only way for Odette to get useful information is to know Alice's interpreter set up ahead of time.

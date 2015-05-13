@@ -1,0 +1,252 @@
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\renewcommand{\qed}{\nobreak \ifvmode \relax \else
+      \ifdim\lastskip<1.5em \hskip-\lastskip
+      \hskip1.5em plus0em minus0.5em \fi \nobreak
+      \vrule height0.75em width0.5em depth0.25em\fi}
+
+\begin{chapquote}{Margaret Mead}
+``Always remember that you are absolutely unique. Just like everyone else.''
+\end{chapquote}
+
+\section{Divisibility Tests}
+
+Recall from the end of week 7. This week, the class will start by continuing the divisibility tests. 
+\begin{theorem}
+An integer $n$ is divisible by $3$ iff the sum of its digits is divisible by $3$
+\end{theorem}
+
+\begin{proof}
+Let $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0}$ and\\ $d_n \equiv x_n \mod3$ where $k-1 \geq n \geq 0$. So the sum of the digits, $d_{k-1} + d_{k-2}+ ... + d_{1}+ d_{0} \equiv (x_{k-1} + x_{k-2} + ... + x_1 + x_0) \mod 3$. Observe that $10 \equiv 1 \mod 3$, then $10^n \equiv 1 \mod 3$. Thus, $d_n10^n \equiv x_n \mod3$, so $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0} \equiv (x_{k-1} + x_{k-2} + ... + x_1 + x_0) \mod 3$. Since $n$ and the sum of the digits share same residual when divided by $3$, they are both divisible by $3$ when the residual is $0$. Therefore, $n$ is divisible by $3$ if and only if the sum of the digits is divisible by $3$.
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $4$ iff the last 2 digits of $n$ is a multiple of $4$.
+\end{theorem}
+
+\begin{proof}
+Let $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0}$. $n$ can be rewritten as $n = 100(d_{k-1}10^{k-3} + d_{k-2}10^{k-4} + ... + d_{3}10 + d_{2}) + d_{1}10 + d_{0}$. Since 100 is divisible by $4$, $n \equiv (d_{1}10 + d_{0}) \mod 4$. Thus if $n$ is divisible by $4$, $d_{1}10 + d_{0} \equiv 0 \mod 4$, and if $d_{1}10 + d_{0} \equiv 0 \mod 4$, then $n$ is divisible by $4$. Therefore $n$ is divisible by $4$ iff the last 2 digits of $n$ is a multiple of $4$.
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $5$ iff the last digit of $n$ is $0$ or $5$.
+\end{theorem}
+
+\begin{proof}
+Let $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0} = 10(d_{k-1}10^{k-2} + d_{k-2}10^{k-3} + ... + d_{1}) + d_{0}$. Since $10$ is a multiple of $5$, $n$ is divisible by $5$ if and only if $d_{0}$ is divisible by $5$. If $d_{0}$ is $0$ or $5$, $d_{0} \equiv 0 \mod5$. Also, if $d_{0} \equiv 0 \mod5$, $d_{0}$ is $0$ or $5$. Therefore, $n$ is divisible by $5$ if and only if the last digit of $n$ is $0$ or $5$.
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $6$ iff $n$ is divisible by $2$ and $3$.
+\end{theorem}
+
+\begin{proof}
+Suppose $n$ is divisible by $6$. Then $n = 6k$ where $k \in \ZZ$. Then by factorization, $n = 2 \times 3 \times k$ so $n$ is divisible by both $2$ and $3$. \\
+\\
+Suppose $n$ is divisible by both $2$ and $3$. Then $n = 2 \times 3 \times k = 6k$. Thus $n$ is divisible by $6$. \\
+\\
+Therefore, $n$ is divisible by $6$ if and only if $n$ is divisible by both $2$ and $3$.
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $2^s$ iff the last s digits are divisible by $2^s$.
+\end{theorem}
+
+\begin{proof}
+Let $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0} = 10^s(d_{k-1}10^{k-1-s} + d_{k-2}10^{k-2-s} + ... + d_{s}) + d_{s-1}10^{s-1} + ... + d_{1}10 + d_{0}$. Since $10^s$ is divisible by $2^s$, $n \equiv (d_{s-1}10^{s-1} + ... + d_{1}10 + d_{0}) \mod 2^s$. Thus if $n$ is divisible by $2^s$, then $d_{s-1}10^{s-1} + ... + d_{1}10 + d_{0} \equiv 0 \mod 2^s$. Also, if $d_{s-1}10^{s-1} + ... + d_{1}10 + d_{0} \equiv 0 \mod 2^s$, $n \equiv 0 \mod 2^s$. Therefore, $n$ is divisible by $2^s$ if and only if the last $s$ digits are divisible by $2^s$. 
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $9$ iff the sum of its digits is divisible by $9$
+\end{theorem}
+
+\begin{proof}
+Let $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0}$ and\\ $d_n \equiv x_n \mod9$ where $k-1 \geq n \geq 0$. So the sum of the digits, $d_{k-1} + d_{k-2}+ ... + d_{1}+ d_{0} \equiv (x_{k-1} + x_{k-2} + ... + x_1 + x_0) \mod 9$. Observe that $10 \equiv 1 \mod 9$, then $10^n \equiv 1 \mod 9$. Thus, $d_n10^n \equiv x_n \mod9$, so $n = d_{k-1}10^{k-1} + d_{k-2}10^{k-2} + ... + d_{1}10 + d_{0} \equiv (x_{k-1} + x_{k-2} + ... + x_1 + x_0) \mod 9$. Since $n$ and the sum of the digits share same residual when divided by $9$, they are both divisible by $9$ when the residual is $0$. Therefore, $n$ is divisible by $9$ if and only if the sum of the digits is divisible by $9$.
+\end{proof}
+
+\begin{theorem}
+An integer $n$ is divisible by $11$ iff the difference between sums of odd power of 10's digit and even power of 10's digit is divisible by $11$.
+\end{theorem}
+
+\begin{proof}
+Let $l = d_{1}10 + d_{3}10^3 + ... + d_{2s+1}10^{2s+1}$, $m = d_{0} + d_{2}10^2 + ... + d_{2s}10^{2s}$ and $n = l+m$. Observe that $10 \equiv -1 \mod 11$, so when $k$ is odd, $10^k \equiv -1 \mod 11$ and when $k$ is even, $10^k \equiv 1 \mod 11$. Thus, $l \equiv (-d_{1}-d_{3}-...-d_{2s+1}) \mod 11$, and $m \equiv (d_{0}+d_{2}+...+d_{2s}) \mod 11$. Since $n = l+m$, $n \equiv (d_{0}+d_{2}+...+d_{2s}) - (d_{1}+d_{3}+...+d_{2s+1}) \mod 11$. Therefore, $n$ is divisible by $11$ if and only if the difference between sums of odd power of 10's digits and even power of 10's digit is divisible by $11$.
+\end{proof}
+\section{Modular Congruence Equations}
+
+The equation $ax \equiv b \mod m$ has a solution if and only if gcd $(a, m) =d$ divides $b$.
+\item Indeed, $ax \equiv b \mod m$ means $\exists -y \in \mathbb{Z}$ such that $ax-b = m(-y)$.
+\item Now we have the diaphantine equation $ax+my=b$. This equation has a solution if and only if $d$ divides $b$. 
+\item To find a value for $x$:
+\begin{enumerate}
+\item Check that gcd $(a, m)$ divides $b$. If not, cause is hopeless [DO NOT CONTINUE!!]
+\item If so, use Extended Euclidean Algorithm to find values for $x$ (and $y$)
+\end{enumerate}
+\underline{Powers mod m:}\\
+Consider the equation $a^k \equiv x \mod m$.
+\item We can use the following tables to figure out values of $x$ for said values of $a$ and $m$.
+The tables for $m=6$ and $m=7$ are filled in with explanations as to how to find out values for $x$. The blank tables are left for practice.
+\begin{enumerate}
+\item $m = 3$:
+
+$a^k \pmod{3}$
+\begin{tabular}{|c | c | c| c| c| c | c|}
+\hline
+$a$ & $a^2$ & $a^3$ & $a^4$& $a^5$& $a^6$ & $a^7$ \\
+\hline
+1	& &	&	&	&	&	\\
+\hline
+2	& &	&	&	&	&	\\
+\hline
+\end{tabular}
+\item $m = 4$:
+
+$a^k \pmod{4}$
+\begin{tabular}{|c | c | c| c| c| c | c|}
+\hline
+$a$ & $a^2$ & $a^3$ & $a^4$& $a^5$& $a^6$ & $a^7$ \\
+\hline
+1	& &	&	&	&	&	\\
+\hline
+2	& &	&	&	&	&	\\
+\hline
+3	& &	&	&	&	&	\\
+\hline
+\end{tabular}
+\item $m = 5$:
+
+$a^k \pmod{5}$
+\begin{tabular}{|c | c | c| c| c| c | c|}
+\hline
+$a$ & $a^2$ & $a^3$ & $a^4$& $a^5$& $a^6$ & $a^7$ \\
+\hline
+1	& &	&	&	&	&	\\
+\hline
+2	& &	&	&	&	&	\\
+\hline
+3	& &	&	&	&	&	\\
+\hline
+4	& &	&	&	&	&	\\
+\hline
+\end{tabular}
+\item $m = 6$:
+
+$a^k \pmod{6}$
+\begin{tabular}{|c | c | c| c| c| c | c|}
+\hline
+$a$ & $a^2$ & $a^3$ & $a^4$& $a^5$& $a^6$ & $a^7$ \\
+\hline
+1	&  &	&	&	&	&	\\
+\hline
+2	& $4$ & 	&	&	&	&	\\
+\hline
+3	& $3$ &	&	&	&	&	\\
+\hline
+4	& $4$ &	&	&	&	&	\\
+\hline
+5	& $1$ &	&	&	&	&	\\
+\hline
+\end{tabular}
+
+Note that leaving the remainder of each row blank after a certain number means that the numbers keep on repeating from the beginning of the row.
+
+For example, for the first row where $a=1$, $a \equiv a^2 \equiv a^3 \equiv a^4 \equiv a^5 \equiv a^6 \equiv a^7 \equiv 1 \mod 6$.
+
+Similarly, for the second row where $a=2, a \equiv 2 \mod 6, a^2 \equiv 4 \mod 6$. Then following the pattern, we have $a^3 \equiv 2 \mod 6, a^4 \equiv 4 \mod 6, a^5 \equiv 2 \mod 6, a^6 \equiv 4 \mod 6$, and lastly, $a^7 \equiv 2 \mod 6$.
+\item $m = 7$:
+
+$a^k \pmod{7}$
+\begin{tabular}{|c | c | c| c| c| c | c|}
+\hline
+$a$ & $a^2$ & $a^3$ & $a^4$& $a^5$& $a^6$ & $a^7$ \\
+\hline
+1	&  &	&	&	&	&	\\
+\hline
+2	& 4 & 1	&	&	&	&	\\
+\hline
+3	& 2 & 6	& 4	& 5	& 1	&	\\
+\hline
+4	& 2 & 1	&	&	&	&	\\
+\hline
+5	& 4 & 6	& 2	& 3	& 1	&	\\
+\hline
+6	& 1 &	&	&	&	&	\\
+\hline
+\end{tabular}
+\end{enumerate}
+
+
+\item Note that for $a=1$, we know that the rest of the row will also be 1s.
+\item For the second row where $a=2$, certainly $2 \equiv 2 \mod 7$ and $(2^2) \equiv 4 \mod 7$. We can use the following method to figure out values of $x$ for the rest of the row:
+\item We multiply the previous number with the first number in the row. So we have $(2 \times 4) = 8$ and we know that $8 \equiv 1 \mod 7$. So the next entry in this row would be $1$. As soon as we hit $1$, we know that the entries in this row will repeat from the beginning of the row. 
+\item Similarly, for the third row where $a=3$, certainly $3 \equiv 3 \mod 7$. Then $3^2 \equiv 9 \equiv 2 \mod 7$. Now using the same method above, $(3 \times 2) \equiv 6 \mod 7$. So the next entry in this row is $6$. 
+\item To figure out the next entry, we multiply the previous number, namely $6$, with $3$, the first number in this row to get $(3 \times 6) = 18$. Now $18 \equiv 4 \mod 7$. Repeat this process to find the following entries in this row. Again, once we hit $1$, we know the entries in this row repeat from the beginning.
+\item 
+
+\underline{Question:}\\
+For what values of $k$ does the equation $a^k \equiv 1 \mod m$ hold?
+\item
+\underline{Conjectures:}\\
+If $m$ is prime, then $a^{n-1} \equiv 1 \mod m$.
+\item
+\underline{Check:}\\
+When $a=m-1, a^2n \equiv 1 \mod m \forall n$.
+\item When gcd $(a, m) =1, \exists k$ such that $a^k \equiv 1 \mod m$, where $k= \phi (m)$. 
+\item To see this, look at the table above, where $m=7$. We know $\phi (m)= \phi (7)=6$ and $a^6 \equiv 1 \mod 7$ for all values of $a$.
+\item Similarly, for $m=6$, $\phi (6) = \phi (3)(\phi (2)) = (3-1)(2-1)=2$.
+We know that $5$ is relatively prime to $6$ so we get $1$ and $1$ is relatively prime to $6$ so we get $1$.
+
+
+
+\section{Fundamental Theorem of Arithmetic (FTa)}
+
+For all $z \in \mathbb{Z}$, $z$ has a unique factorization as a product of primes.
+
+\begin{example} Nonunique Factorization: Quadratic Extensions
+
+In $\mathbb{Z}(-\sqrt{5})$, $6 = (2)(3) = (1 + \sqrt{5})(1 - \sqrt{5})$.
+Note that both $2$ and $3$ are irredicuble in $\mathbb{Z}(-\sqrt{5})$ and $(1 + \sqrt{5}),(1 - \sqrt{5})$ are irreducible in $\mathbb{Z}(-\sqrt{5})$ so $6$ can't be factored further. Therefore, $6$ has nonunique factorization in $\mathbb{Z}(-\sqrt{5})$.
+\end{example}
+
+\begin{lemma} For all $a,b \in \mathbb{Z}$ and $m \in \mathbb{Z}_{>0}$,
+\begin{enumerate}
+\item If $gcd(a,m) = 1$, then if $m$ divides $ab$, then $m$ divides $b$. 
+ \item If $b_1,...,b_k$ are relatively prime to $m$ ($gcd(b_i,m) = 1$), then the product $b_1b_2...b_k$ is also relatively prime to $m$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}.
+\begin{enumerate}
+\item Comes from Fundamental Theorem of Arithemetic (FTa)--no primes in m divide a so they have to divide b.
+\item Again, via FTa--$b_i$ has no primes in common with $m$, so $b_1b_2...b_k$ can't either.
+\end{enumerate}
+\end{proof}
+
+\begin{theorem} Euler's Theorem
+
+For all $a \in \mathbb{Z}$ and $m \in \mathbb{Z}_{>0}$, if $gcd(a,m) = 1$, then $a^{\phi(m)} \equiv 1$ mod $m$.
+\end{theorem}
+
+\begin{proof}
+Assume $gcd(a,m) = 1$. We may assume $0 \leq a \leq m - 1$ (if not, reduce mod m first, then continue with the proof) [ie, $a$ is a LNNR (least nonnegative residue mod $m$)]. Recall $\phi(m)$ counts the integers between $0$ and $m - 1$ that are relatively prime to $m$ (Ex: $\phi(15) = 8$; $\{1,2,4,7,8,11,13,14\}$). Denote the set of these integers by $B = \{b_1,b_2,...,b_{\phi(m)}\}$. The key step is to prove the following equality:
+
+\item $A = \{ab_1 \% m, ab_2 \% m,..., ab_{\phi(m)} \% m\} = B$.  
+
+\item By Lemma 8.8 (2), $\gcd(ab_i,m) = 1$, so $gcd(ab_i \% m,m) = 1$ by the Extended Euclidean Algorithm.  This means that $A \subseteq B$. B. Assume, by way of contradiction, that $A \neq B$. This means that there exists $b_j > b_k$ where $ab_j \equiv ab_k$ mod $m$. Thus, $m$ divides $ab_j - ab_k = a(b_j - b_k)$. By Lemma 8.8 (1), $m$ divides $b_j - b_k$. But, $0 < b_j = b_k \leq m - 1$, so $m$ cannot divide $b_j - b_k$, which leads to a contradiction. Thus, $A = B$.
+
+Consider $a^{\phi(m)}b_1b_2...b_{\phi(m)} = (ab_1)(ab_2)...(ab_{\phi(m)})$. Then $(ab_1)(ab_2)...(ab_{\phi(m)}) \equiv b_1b_2...b_{\phi(m)}$, using $A = B$ mod $m$. This implies $m$ divides $a^{\phi(m)}(b_1b_2...b_{\phi(m)}) - (b_1b_2...b_{\phi(m)}) = (a^{\phi(m)} - 1)(b_1b_2...b_{\phi(m)})$. By Lemma 8.8 (2), $gcd(b_1b_2...b_{\phi(m)},m) = 1$. By Lemma 8.8 (1), $m$ divides $a^{\phi(m)} - 1$. Hence, $a^{\phi(m)} \equiv 1$ mod $m$.
+
+\end{proof}
+
+\begin{theorem} Fermat's Little Theorem
+
+For all $a,p \in \mathbb{Z}$ where $p$ is prime, if $gcd(a,p) = 1$, then $a^{p-1} \equiv 1$ mod $p$.
+
+\end{theorem}
+
+\begin{proof} Proof on Homework \#14 via Euler's Theorem.
+\end{proof}
+
+

@@ -1,0 +1,152 @@
+\begin{chapquote}{Niels Bohr}
+``Anyone who can contemplate quantum mechanics without getting dizzy hasn't understood it.''
+\end{chapquote}
+\section{Pre-quantum techniques for ``cracking'' encryption} Define each of the following terms and give an example (real or imagined) of the attack in practice
+\begin{enumerate}
+\item traffic analysis
+\\
+\\Identifying the sender or receiver of a message, as well as the location, but not the content of the message. An example of this is the application "Yo".
+\vfill
+\item tempest attack
+\\
+\\Finding the keystrokes being typed using the electromagnetic signals from a computer's display unit. An example of this is the possiblilty of the FBI using this method for surveillance.
+\vfill
+\item virus/trojan horse
+\\
+\\Software which disguises itself as trustworthy software, to convince users to give personal information. For example, if you think that you are buying good privacy, but the owner actually now has access to all of your information.
+\item backdoor
+\\
+\\When a trustworthy company secretly siphons information from users without them knowing. For example the NSA, set a standard for how software calculated random numbers, so that they could use a private algorithm to break into citizen's information.
+\end{enumerate}
+\pagebreak
+\section{Superposition or Multiverse theory?}\label{sec:2}
+\begin{enumerate}
+\item \label{q:2.1} Consider the question, ``Find all the numbers $a$ between $1$ and $127$ that have the property that the digits $0$ through $9$ appear once and only once between the expressions of $a^2$ and $a^3$.''  (Eg, a number $a$ where $a^2 = 1234$ and $a^3 = 567890$ would satisfy this property, if it existed.)
+\begin{enumerate}
+\item Describe a method for organizing the class into finding an answer.
+\\
+\\Suppose there are 25 students in class. Assign each student a number from $a_0$ 1 to 25. Each student will check to see if $a_0^2$ and $a_0^3$ have the property that all of the digits appear once and only once between them. Then, each student will calculate $a_1 = a_0 + 25$ and check to see if it passes the test. Repeat this process until $a_k > 127$.  
+\\
+\item Describe an algorithm (traditional, not quantum!) for having a computer check this.  Your input will be in binary\footnote{01100010 01100101 01100011 01100001 01110101 01110011 01100101 00100000 01110100 01101000 01100001 01110100 00100000 01101001 01110011 00100000 01110111 01101000 01100001 01110100 00100000 01100011 01101111 01101101 01110000 01110101 01110100 01100101 01110010 01110011 00100000 01110101 01101110 01100100 01100101 01110010 01110011 01110100 01100001 01101110 01100100}$^{,}$\footnote{{eg, http://www.rapidtables.com/convert/number/binary-to-ascii.htm}} (for instance, $19 = (10101)_2$).
+\\
+\\Input a number between 1 and 127 in binary. Check that the number passes the conditions. Save the number if it satisfies the conditions. Continue this proces for all numbers between 1 and 127. The final output will be a list of numbers that pass the test.
+\vfill
+\end{enumerate}
+\pagebreak
+\item Light: it's a bunch of particles acting like waves.  Simple enough.  When two waves meet, they reinforce or cancel one another.  Doodle a picture of the famous light experiment (as described on p.\ 322 of \textit{The Code Book}).
+\\
+\\See page 322 of \textit{The Code Book}.\\
+
+
+
+\item The weird thing is that \textit{\textbf{a single photon seems to reinforce/cancel itself}}. There are two theories about this; describe them.
+\begin{enumerate}
+\item Superposition Theory\\
+\\
+In superposition theory, until it is observed/measured a particle is in all possible states at once. Applied to this particular situation, a photon unobserved will take all possible paths at once, thus interfering with itself in both constructive and destructive manners.\\
+
+
+\item Multiverse Theory\\
+\\
+In Multiverse Theory, when a particle reaches a point where it can take more than one path, the universe splits, creating a new universe for each possible choice. Applied to this particular situation, when the photon is emitted, the universe splits into many universes in which the photon takes a different path in each. Later, when the universes merge, they affect eachother, causing interference.\\
+\\
+\end{enumerate}
+
+
+
+\item This morning, you can't decide whether to have fruit salad or leftover pizza for breakfast.  Describe why you get indigestion after breakfast if you are...
+\begin{enumerate}
+\item a superpositionist.\\
+\\
+Until you're asked what you ate (until you've been \textit{observed}) you existed in a state of superpostion, having eaten both. Regardless of whether or not you settle into the state of having eaten fruit salad, you are affected, much like the photon in question 3, by having eaten the pizza in the superposition state.\\
+\\
+\item a multiversist.\\
+\\
+From a multiversist's point of view, when you came to the choice of what to eat for breakfast the universe split into many new universes, including one in which you ate fruit salad and one in which you ate pizza. When asked about your breakfast choice later that day, the universes merge, leaving you feeling as if you had eaten the pizza.
+
+\end{enumerate}
+\pagebreak
+\item What is a \textit{\textbf{bit}}?  What is a \textit{\textbf{qubit}}?  How do they differ?\\
+\\
+A \textit{bit} is a unit in which a truth value is stored. In a computer, these truth values are represented as 0 = False, and 1 = True. A \textit{quibit}, on the other hand, is a unit that can hold either truth value, and can also exist in a state of superposition.\\
+\item Describe (broadly) how a quantum computer would solve the question in \ref{sec:2}\ref{q:2.1}.\\
+\\
+The quantum computer would be given all 127 inputs and an algorithm to test those imputs to see if they satisfy the condition. The computer would then simultaneously test all of the inputs, and output a list of all the inputs that satisfied the condition.\\
+\\
+\item Explain why Shor's and Grover's algorithms are bad news for RSA. (I.e., what happens to factorization with a quantum computer?  Why/how?)\\
+\\
+The key factor that plays into the security of RSA encryption schemes is the fact that factoring large numbers is difficult and time intensive. If Shor's or Grover's algorithms were to be implemented on a quantum computer, we would be able to factor numbers very quickly, and thus negate any security RSA once provided.
+\vfill
+\end{enumerate}
+\section{How the Quantum Key Exchange Works}
+\item In the following cases, P represents a photon and $\theta$ represents the polarization of P.
+
+\item The polarization of P makes up Lie groups, and have continuous symmetries.
+
+\item A \textit{\textbf{light trap}} is a polaroid filter. It only allows photons of certain polarizations through while blocking others out.
+
+\item Note that a light filter cannot always block out photons of different polarizations.
+\begin{example} Assume that you have a light trap that allows photons of polarization of $\theta = \pi / 2$ through.
+
+To find the probability of any photon P getting through the light trap, we must take the polarization of P and divide it by the polarization of the light trap. 
+
+For starters, if P has $\theta = \pi / 2$ then the probability of P getting through is
+$(\pi / 2) / (\pi / 2) = 1
+
+If $\theta = 0$ then the probability of the photon getting through is
+$0 / (\pi / 2) = 0$
+
+If $\theta = \pi / 4$ then the probability of the photon getting through is
+$(\pi / 4) / (\pi / 2) = 1/2$
+\end{example}
+
+\item As we can see in the last case, it is possible for a photon of with a different polarization than the one the light trap is aligned for can be let in.
+
+\item To highlight how quantum cryptography keys are made, we will simplify the possible options and make it a binary system.
+
+\item The \textit{\textbf{interpreter}} is a special light trap that is used to make quantum cryptography keys.
+\\In our examples, we will only consider two of the many possible types: rectilinear and diagonal. Both of these types are created to accepted only two types of polarizaed photons.
+\item A \textit{\textbf{rectilinear}} interpreter (R) is set to accept photons polarized with $\theta = 0$ and $\theta = \pi / 2$.
+\item A \textit{\textbf{diagonal}} interpreter (D) is set to accept photons polarized with $\theta = \pi / 4$ and $\theta = 3\pi / 4$.
+\item In both cases, if a photon that does not meet the expected polarization requirements, the photon will not be completely blocked out. Instead, the photon will pass through but be realigned to have a polarization to match one of the two accepted options.
+
+\item For the binary system, we will consider only the four polarizations of $\theta$ that the interpreters represent. That is, $\theta = 0, \pi/2, \pi/4, or 3\pi/4$.
+\item For the rectilinear interpreter, let $\theta=\pi/2$ represent 1 and $\theta=0$ represent 0.
+\item For the diagonal interpreter, let $\theta=\pi/4$ represent 1 and $\theta=3\pi/4$ represent 0.
+\begin{example}
+\item Let's say Alice and Bob want to create a shared private key.
+\begin{enumerate}
+\item Alice sets up the order of her interpreters: RRDRDD.
+\item She then chooses her binary string: 100110.
+\item She polarizes the photons and sends the beam of light to Bob. The polarizations, in order, are $\pi/2, 0, 3\pi/4, \pi/2, \pi/4, 3\pi/4$.
+
+\item Bob sets up his interpreters. He has no idea how Alice set hers up, so he has to guess. He has a $50\%$ of guessing right for each one, so it's very unlikely that he would guess them all correct. The expected value of how many he guesses right is 1/2.
+\\ So Bo guesses and sets up his interpreters: RRDDRD.
+\item The photons go through, and he interprets them to be $\pi/2, 3\pi/4, 3\pi/4, \pi/4, 0, 3\pi/4$.
+In the binary bits, this comes out to be 100100.
+
+\item Now the two communicate. It can be over an unsecure line; whoever is listening in won't be able to discover the code.
+\item Alice tells Bob what interpreters she uses. She doesn't mention a thing about the polarization of the photons she sent.
+\item Bob looks at his notes and sees which times he guessed the interpreters right. In this case, he guessed right on the first, third, and sixth interpreter.
+\item Bob tells Alice which ones he got right. They both discard the rest of the numbers.
+\item Therefore their shared secret code consists of the first, third, and sixth bit. In this case: 100.
+\end{enumerate}
+\end{example}
+\\
+\item If Odette is listening in, why can't she figure out the shared secret?
+\item First off, Odette is like Bob: she has no idea what interpreters Alice is using. So when she is measuring the photons, she is guessing too. She has to guess the first, third, and sixth interpreter right. If she fails even one of those, she will have inaccurate readings.
+\item Further, inaccurately guessing can actually give her away. As with Bob's interpreters, if Odette uses the wrong one the interpreter will read the photon wrong. But then that wrong interpreter can repolarize the photon!
+\item Now Odette has changed the polarization of a photon. If Bob guesses Alice's correct interpreter but they have different bits in the key, any message that they send to each other will fail to come out properly. That actually warns the two that Odette is listening in.
+\item With that information, they can toss their key and make a new one. Then Odette will be back at square one and still at the disadvantage.
+
+\item This system is perfect (supposedly)! The main problem is that we don't have the physical materials to do this with the average person. But maybe one day we'll get lucky...
+
+\pagebreak
+\section{Homework: Due Friday, 5/8}
+\begin{enumerate}
+\item Write a short fictional account of one (or more) consequence(s) of a real quantum computer being built on Class and Charter day (5 sentences, ish).
+\item Find a description of ``The Traveling Salesman Problem'' and describe the brute-force method for solving it.  Then describe, broadly, a method for solving it with a quantum computer.  What are your inputs?
+\item What additional security measure does quantum cryptography provide that traditional cryptographic methods do not provide?
+\item Who is responsible for demonstrating the first successful quantum cryptography exchange (using computers named Alice and Bob)?
+\item Singh claims that the successful implementation of quantum cryptography would be a permanent ``win'' for codemakers over codebreakers.  Defend this position or write a short sci-fi scenario to debunk it (5 sentences, ish).
+\end{enumerate}

@@ -1,0 +1,121 @@
+
+%CHAPTER 13 BEGINS HERE (Beth C)
+\begin{chapquote}{Professor Gibbons}
+``Whenever I say "Elliptic Diffie-Hellman", I picture Whitfield Diffie on an elliptical.''
+\end{chapquote}
+\begin{chapquote}{Professor Gibbons}
+''I'm going to kill my cat.''
+\end{chapquote}
+
+\section{Digital Signatures}
+Digital signatures can be used to authenticate the identity of a message's author.
+
+Overview of Digital Signatures:
+\begin{itemize}
+\item $k^{priv}$: private signing key
+\item $k^{pub}$: public verification key
+\item "sign": an algorithm that uses $k^{priv}$ to "sign" digital message M. 
+\item "verify": algorithm using $k^{pub}$ to verify that $M^{sig}$ matches M.
+\end{itemize}
+
+Goals of Digital Signatures:
+\begin{itemize}
+\item 1. Create a system where $k^{priv}$ remains private despite $k^{pub}$ being public
+\item 2. Keep $k^{priv}$ private despite publishing many signature pairs.
+\end{itemize}
+
+RSA Digital Signatures:
+Suppose Alice is creating a digital signature keypair. Pick 2 large primes, $p$ and $q$, and calculate $n=pq$ and $\phi(n)=(p-1)(q-1)$. Randomly choose $e$ where $gcd(\phi(n),e)=1$. Next solve the diophantine equation $ed+\phi(n)k=1$ to find private key $d$.
+
+
+\begin{itemize}
+\item Public information: (n,e) is $k^{pub}$
+\item Private information: d is $k^{priv}$
+\end{itemize}
+
+Alice signs her message M: $M^{d}\mod{n}$ = $M^{sig}$ and sends the pair $(M, M^{sig}$) to Bob.
+
+To verify that the message M was authored by Alice, Bob calculates $(M^{\text{sig}})^{e}\mod{n}$. If $M^{ed}\mod{n} = M$, then Bob knows Alice wrotes the message. (This works as long as $1 \leq M < n$ and $M \ne p$, $M \ne q$.)
+
+\begin{example}
+Alice and Bob use Diffie-Hellman to create a shared secret key. Alice will also include a digital signature.
+\begin{itemize}
+\item Diffie-Hellman primes: $p=13$, $q=2$
+\item Alice's secret integer: $a=5$
+\item Digital message to Bob: $ M = q^{a}\mod{p} = 2^{5}\mod{13} = 6$
+\end{itemize}
+
+Create $M^{sig}$
+\begin{itemize}
+\item Public key: $n = 14417$, $e = 17$
+\item Private key: $d = 6257$
+\item $M^{sig} = 6^{6257} \mod{12417 = 10753}$
+
+\end{itemize}
+
+Bob receives (6, 10753) and calculates:
+$10753^{17}\mod{14417} = 6$.
+Since $M = (M^{sig})^{e} \mod{n}$, Bob knows the message is from Alice. 
+\end{example}
+
+Goals: 
+\begin{itemize}
+\item $k^{priv}$ remains private even though $k^{pub}$ is public.\\
+Note: RSA Digital Signatures are as secure (99.8\%) as RSA encryption.
+\item $k{priv}$ remains private even with A LOT of public message, signature pairs.\\
+Note: We don't know yet.
+\end{itemize}
+
+
+
+
+On Wednesday 4/29 we had an in-class quiz during which we attempted to construct ways to attack the security of RSA Digital Signature Encryption with the acquistion of many message-signature pairs.\\
+\section{Security of RSA Signatures}
+
+\underline{Claim}: We can't find $d$ in a timely fasion. 
+
+Brute force technique: try to find all possible $d$.
+In their original paper (\textit{Rivest, Shamir, Adleman, 1978}) recommend $p$ and $q$ are at least 200 digits each so that $n$ is about 400 digits long. The largest 400 digit number is equal to $10^{400}-1$.\\
+
+The authors show that any "conceivable" way to find $d$ is at least as computationally as hard as factoring $n$.\\ 
+Back to RSA Cryptography (as opposed to digital signatures):\\
+Finding $d$:
+\begin{itemize}
+\item Factor $n$. But this can take a very long time.
+For example:
+\begin{table}[ht]
+\caption{Factoring Large Numbers}
+\centering
+\begin{tabular}{c c c}
+\hline \hline
+Digits & Number of Operations & Time (1978) \\ [.5ex]
+\hline
+50 & 1.4 x $10^{10}$ & 4 hours \\
+75 & 9 x $10^{12}$ & 104 days \\
+100 &  & 74 years \\
+500 &  & 4.2 x $10^{25}$ years \\ [1ex]
+\hline
+\end{tabular}
+\end{table}
+
+\item Find $d$ without factoring $n$ or computing $\phi(n)$.\\This can be done by finding the multiplicative inverse of $e$ modulo $n$.
+\end{itemize}
+\underline{Claim}: This is as hard as factoring $n$ because it leads to an algorithm for factoring $n$ (which are all slow).
+If we find $d$, we know $$(ed)-1 \equiv \phi(n)k, \text{ for some k}.$$
+
+A result of Miller: knowing any multiple of $\phi(n)$ leads to a factorization algorithm for $n$.\\
+
+Given a lot of message-signature pairs, is RSA digital secure? 
+
+\underline{Caveat}: We need $gcd(M_i, n) = 1$ (Euler's Theorem). Each $M_i$ gives us non-factors of $n$. Can we accidentally eliminate all non-factors of $n$ and be left with a small list of factors?
+
+\underline{How to avoid this}: Consider $n = pq$ where $p$ and $q$ are primes of around 200 digits. If we force $M_i$ to have fewer than 200 digits, we can't eliminate any 200-digit primes. Thus, factoring $n$ is still hard. To rule out all odd numbers with 200 digits, we would need around $45 \times 10^{198}$ message pairs.
+
+\begin{proposition}
+Finding $d$ in the RSA digital signature scheme (where $M_i$ has fewer than 200 digits) leads to a factorization algorithm for $n$.
+\end{proposition}
+\begin{proof}
+We proceed by Induction on the number of message-signature pairs. 
+Let $k = 0$. Then, $M_i^{de}$ \% $n = M_i$ and I know $M$, $e$, $M^d$, and $n$. Finding $d$ is equivalent to finding $\varphi(n)k$ for some $k \in \ZZ$ in, $$ ed-1 = \varphi(n)k.$$ By Miller's result, this allows us to factor $n$.
+Let $k = 2$. Then we have $(M_1, M_1^d)$ and $(M_2, M_2^d)$. What I know can be summarized in the equation $$((M_1 + M_2)^2)^{ed}  \text{ \% }  n = (M_1 + M_2)^2  \text{ \% }  n.$$ This is a single result that can be put into Miller's result which allows us to factor $n$. 
+\end{proof}
