@@ -11,8 +11,10 @@ The solution to the Substitution Cipher and the great advice about problem solvi
 The \defi{Vigen\`ere Cipher} is a \defi{polyalphabetic cipher} meaning that it uses 26 cipher alphabets to encrypt a message.
 The steps to encipher a message are:
 \begin{enumerate}
-\item Draw the Vigen\`ere Square, where each row represents a \defi{Caesar Shift} row, but beginning one letter later.So row 1 is a \defi{Caesar Shift} of 1, row 2 is a Caesar shift of 2...etc.  See Figure~\ref{fig:VigSquare}
+\item Draw the Vigen\`ere Square, where each row represents a \defi{Caesar Shift} row, but beginning one letter laterthan the previous row.So row 1 is a \defi{Caesar Shift} of 1, row 2 is a Caesar shift of 2...etc.  See Figure~\ref{fig:VigSquare}
 \item Use all the rows to encipher the message
+\item Establish a keyword.
+\item Encrypt the message by enciphering the $n^{th}$ letter of the message with the \defi{Caesar Shift} in which the A is encrypted to the $n^{th}$ letter in the keyword.
 \end{enumerate}
 
 

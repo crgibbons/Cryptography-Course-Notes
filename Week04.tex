@@ -14,7 +14,7 @@ A counting function, we input $n \in \ZZ$ and we get a "count of some stuff rela
 \item $\phi(4) = ?$\\$m = 0,1,2,3$\\$gcd(0,4) = 4$ so eliminate 0,\\$gcd(1,4) = 1$ so keep 1,\\$gcd(2,4) = 2$ so eliminate 2,\\$gcd(3,4) = 1$ so keep 3,\\$\phi(4) = 2$.
 \item Do yourself:\\$\phi(15) = ?$\\$m = 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14$\\$\phi(15) = 8$
 \end{enumerate}
-In each example, we figured out which numbers less than $n$ in $\phi(n)$ were relatively prime to n.  The total amount of these numbers is $\phi(n)$. 
+In each example, we figured out which non-negative integers less than $n$ were relatively prime to n.  The total amount of these numbers is $\phi(n)$. 
 
 
 \vspace{5mm}
@@ -198,7 +198,7 @@ A^{-1} = \frac{1}{\det |A|}
 \end{bmatrix}
 \end{align*}
 
-$A(-1)[encrypted] : 19 14 14 2 14 11 3 23$
+$A^{-1}[encrypted] : 19 14 14 2 14 11 3 23$
 We then use Table~\ref{tab:base26digits} to solve the message resulting in {\tt toocoldx}. 
 \end{example}
 
@@ -231,24 +231,3 @@ If the user's password is set as kittyz, then the website login program would st
 \vspace{5mm}
 More than one input could theoretically result in the same output from certain hash functions. If this were possible, then in our previous example, one could login to the same username using kittyz or dogz if dogz gave the same hash function output as kittyz.  But many articles have been written about how this should never occur for the right hash functions.\footnote{Check out arXiv.org for articles on this topic}
 
-\begin{definition} This is the definition of the word \defi{definition}.  If the word is in the Glossary, you can use \gls{algorithm} to make it a clickable link!
-\end{definition}
-
-\begin{proposition} Here's a prop.\end{proposition}
-
-\begin{example} Here's an example. \end{example}
-
-\begin{corollary}\label{cor:ExampleCorx} And a corollary.  This one is labeled so you can refer to it later.\end{corollary}
-
-You can refer to Corollary~\ref{cor:ExampleCorx} like this.
-
-\section{Here's the second section}
-You can look at Week 1 for tips.  One useful one is long division:
-
-\[
-\longdiv{05728}{26}
-\]
-
-\section{Tips from other notetakers}
-
-Use an imac for huge screen real estate!

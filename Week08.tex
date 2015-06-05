@@ -14,7 +14,7 @@
 
 \section{Divisibility Tests}
 
-Recall from the end of week 7. This week, the class will start by continuing the divisibility tests. 
+Recall from the end of week 7, this week the class will start by continuing the divisibility tests. 
 \begin{theorem}
 An integer $n$ is divisible by $3$ iff the sum of its digits is divisible by $3$
 \end{theorem}
@@ -72,12 +72,12 @@ An integer $n$ is divisible by $11$ iff the difference between sums of odd power
 \end{theorem}
 
 \begin{proof}
-Let $l = d_{1}10 + d_{3}10^3 + ... + d_{2s+1}10^{2s+1}$, $m = d_{0} + d_{2}10^2 + ... + d_{2s}10^{2s}$ and $n = l+m$. Observe that $10 \equiv -1 \mod 11$, so when $k$ is odd, $10^k \equiv -1 \mod 11$ and when $k$ is even, $10^k \equiv 1 \mod 11$. Thus, $l \equiv (-d_{1}-d_{3}-...-d_{2s+1}) \mod 11$, and $m \equiv (d_{0}+d_{2}+...+d_{2s}) \mod 11$. Since $n = l+m$, $n \equiv (d_{0}+d_{2}+...+d_{2s}) - (d_{1}+d_{3}+...+d_{2s+1}) \mod 11$. Therefore, $n$ is divisible by $11$ if and only if the difference between sums of odd power of 10's digits and even power of 10's digit is divisible by $11$.
+Let $l = d_{1}10 + d_{3}10^3 + ... + d_{2s+1}10^{2s+1}$, $m = d_{0} + d_{2}10^2 + ... + d_{2s}10^{2s}$ and $n = l+m$. Observe that $10 \equiv -1 \mod 11$, so when $k$ is odd, $10^k \equiv -1 \mod 11$ and when $k$ is even, $10^k \equiv 1 \mod 11$. Thus, $l \equiv (-d_{1}-d_{3}-...-d_{2s+1}) \mod 11$, and $m \equiv (d_{0}+d_{2}+...+d_{2s}) \mod 11$. Since $n = l+m$, $n \equiv (d_{0}+d_{2}+...+d_{2s}) - (d_{1}+d_{3}+...+d_{2s+1}) \mod 11$. Therefore, $n$ is divisible by $11$ if and only if the difference between sums of odd power of 10's digits and even power of 10's digits is divisible by $11$.
 \end{proof}
 \section{Modular Congruence Equations}
 
 The equation $ax \equiv b \mod m$ has a solution if and only if gcd $(a, m) =d$ divides $b$.
-\item Indeed, $ax \equiv b \mod m$ means $\exists -y \in \mathbb{Z}$ such that $ax-b = m(-y)$.
+\item Indeed, $ax \equiv b \mod m$ means $\exists (-y) \in \mathbb{Z}$ such that $ax-b = m(-y)$.
 \item Now we have the diaphantine equation $ax+my=b$. This equation has a solution if and only if $d$ divides $b$. 
 \item To find a value for $x$:
 \begin{enumerate}
@@ -189,7 +189,7 @@ $a$ & $a^2$ & $a^3$ & $a^4$& $a^5$& $a^6$ & $a^7$ \\
 For what values of $k$ does the equation $a^k \equiv 1 \mod m$ hold?
 \item
 \underline{Conjectures:}\\
-If $m$ is prime, then $a^{n-1} \equiv 1 \mod m$.
+If $m$ is prime, then $a^{m-1} \equiv 1 \mod m$.
 \item
 \underline{Check:}\\
 When $a=m-1, a^2n \equiv 1 \mod m \forall n$.
@@ -234,7 +234,7 @@ Assume $gcd(a,m) = 1$. We may assume $0 \leq a \leq m - 1$ (if not, reduce mod m
 
 \item $A = \{ab_1 \% m, ab_2 \% m,..., ab_{\phi(m)} \% m\} = B$.  
 
-\item By Lemma 8.8 (2), $\gcd(ab_i,m) = 1$, so $gcd(ab_i \% m,m) = 1$ by the Extended Euclidean Algorithm.  This means that $A \subseteq B$. B. Assume, by way of contradiction, that $A \neq B$. This means that there exists $b_j > b_k$ where $ab_j \equiv ab_k$ mod $m$. Thus, $m$ divides $ab_j - ab_k = a(b_j - b_k)$. By Lemma 8.8 (1), $m$ divides $b_j - b_k$. But, $0 < b_j = b_k \leq m - 1$, so $m$ cannot divide $b_j - b_k$, which leads to a contradiction. Thus, $A = B$.
+\item By Lemma 8.8 (2), $\gcd(ab_i,m) = 1$, so $gcd(ab_i \% m,m) = 1$ by the Extended Euclidean Algorithm.  This means that $A \subseteq B$. Assume, by way of contradiction, that $A \neq B$. This means that there exists $b_j > b_k$ where $ab_j \equiv ab_k$ mod $m$. Thus, $m$ divides $ab_j - ab_k = a(b_j - b_k)$. By Lemma 8.8 (1), $m$ divides $b_j - b_k$. But, $0 < b_j - b_k \leq m - 1$, so $m$ cannot divide $b_j - b_k$, which leads to a contradiction. Thus, $A = B$.
 
 Consider $a^{\phi(m)}b_1b_2...b_{\phi(m)} = (ab_1)(ab_2)...(ab_{\phi(m)})$. Then $(ab_1)(ab_2)...(ab_{\phi(m)}) \equiv b_1b_2...b_{\phi(m)}$, using $A = B$ mod $m$. This implies $m$ divides $a^{\phi(m)}(b_1b_2...b_{\phi(m)}) - (b_1b_2...b_{\phi(m)}) = (a^{\phi(m)} - 1)(b_1b_2...b_{\phi(m)})$. By Lemma 8.8 (2), $gcd(b_1b_2...b_{\phi(m)},m) = 1$. By Lemma 8.8 (1), $m$ divides $a^{\phi(m)} - 1$. Hence, $a^{\phi(m)} \equiv 1$ mod $m$.
 

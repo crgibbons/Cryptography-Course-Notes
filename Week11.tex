@@ -72,7 +72,7 @@ In 2002 the AKS primality test was discovered: $1^{st}$ primality test that was 
 $$(x - a)^{n} \equiv (x^{n} - a) \mod n,$$
 iff n is prime. Main idea of proof:
 
-$$ {n \choose x} \equiv  0  \mod n$$
+$$ {n \choose k} \equiv  0  \mod n$$
 for $1 \leq k \leq (n-1)$, iff n is prime.
 \\
 
@@ -103,7 +103,7 @@ If $d \ne 1$, n is composite.
 \noindent \textbf{\underline{Step 2:}} Calculate $a_{2} = b^{(n-1)/2} \% n$ (use fast exponentiation).
 $$[a_{2}^{2} \equiv (b^{(n-1)/2})^2 \mod n \equiv b^{n-1} \mod n \equiv 1]$$
 
-If $a_{2} \not equiv 1 \mod n$, it fails the fact, thus n is composite.
+If $a_{2} \notequiv 1 \mod n$, it fails the fact, thus n is composite.
 
 If $a_{2} \equiv -1 \mod n$, we can't do anything else,
     
@@ -134,7 +134,7 @@ $n = 121, b = 3$
 
 \textbf{Step 2: }
 
-\quad $3^{60} = (3^{5})^{6} \equiv 1 \mod 121$, 60 is even
+\quad $3^{60} = (3^{5})^{12} \equiv 1 \mod 121$, 60 is even
 
 \textbf{Step 3: }
 
@@ -169,7 +169,7 @@ Input: $n$, the number being factored; $k$, the number of bases to try in Miller
 If all tests pass, $n$ is most likely a prime (1 - $\dfrac{1}{4^{k}}$ probability).
 
 \section{Elliptic curves}
-\begin{definition} Suppose $x^3 + ax + b$ is a polynomial with a, b $\in \mathbb{R}$ with no multiple roots. An elliptic curve over $\mathbb{R}$ is the set of points (x, y) $\in \mathbb{R^2}$ satisfying $x^3 + ax + b - y^2 = 0$.
+\begin{definition} Suppose $y^2 = x^3 + ax + b$ is a polynomial with a, b $\in \mathbb{R}$ with no multiple roots. An elliptic curve over $\mathbb{R}$ is the set of points (x, y) $\in \mathbb{R^2}$ satisfying $x^3 + ax + b - y^2 = 0$.
 \begin{example} $y^2 = x^3 - 4x (+0)$.
 
 \underline{To sketch}: 
@@ -229,7 +229,7 @@ $$y^2 = (\frac{2}{\sqrt{3}})^3 - 4(\frac{2}{\sqrt{3}}) > 0$$.
 \begin{definition}
 A group G is a set with an operation * where 
 \begin{itemize} 
-\item $g * h \in G \forall g, h \in G$ (Closed under *)
+\item $g * h \in G \forall g, h \in G$ (Closed under $*$)
 \item $(g * h) * f = g * (h * f) \forall g, h, f \in G$ (Associative)
 \item $\exists e \in G$ such that $ e * g = g * e = g \forall g \in G$ (Identity)
 \item $\forall g \in G, \exists g^{-1} \in G$ where $g * g^{-1} = g^{-1} * g = e$. (Inverses)
@@ -250,9 +250,8 @@ If $g * h = h * g \forall g, h \in G$, (Commutative), then G is called Abelian
 \begin{itemize}
 \item If $x_{0} \neq x_{1}$, then $\ell = \overline{PQ}$ intersects E at a third point $R = (x_{2}, y_{2})$, 
 \item then define $P + Q = P - P =\mathcal{O}$.
-\item If $x_{1} = x_{0}$, then we say $Q = -P$ and we define $P + Q = P - P = \mathcal{O}$.
-\item If $P = Q$, let $\ell$ be the tangent line to the curve $P$.
-\item If there's a second point of intersection $R$, then $P + P = -R$. 
+\item If $x_{1} = x_{0}$ and $y_{0} \neq y_{1}$, then we say $Q = -P$ and we define $P + Q = P - P = \mathcal{O}$.
+\item If $P = Q$, let $\ell$ be the tangent line to the curve $P$ and there's a second point of intersection $R$, then $P + P = -R$. 
 \end{itemize}
 \end{enumerate}
 
